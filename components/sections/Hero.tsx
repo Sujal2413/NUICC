@@ -243,7 +243,7 @@ export default function Hero() {
         <div className="hero-orb hero-orb--4" />
       </div>
 
-      {/* ── Statues photograph (Unity ⟷ Liberty) ── */}
+      {/* ── U.S.–India skyline photograph ── */}
       <div className="hero-photo" aria-hidden="true" />
 
       {/* ── Particle Field ─────────────────── */}
@@ -377,14 +377,14 @@ export default function Hero() {
           isolation: isolate;
         }
 
-        /* ── Statues photo layer ─────────── */
+        /* ── U.S.–India skyline photo layer ── */
         .hero-photo {
           position: absolute;
           inset: 0;
           z-index: -3;
-          background-image: url("/assets/img/home/hero-statues.jpg");
+          background-image: url("/assets/img/home/hero-skyline.jpg");
           background-size: cover;
-          background-position: center 32%;
+          background-position: center 38%;
           background-repeat: no-repeat;
         }
 
@@ -814,23 +814,48 @@ export default function Hero() {
         @media (max-width: 680px) {
           .hero-section {
             min-height: auto;
-            padding: 110px 0 30px;
+            padding: 96px 0 28px;
+          }
+          .hero-sub-eyebrow {
+            font-size: 12px;
+            margin-top: 10px;
+            margin-bottom: 16px;
           }
           .hero-headline {
-            font-size: clamp(32px, 11.5vw, 56px);
-            line-height: 1.12;
+            font-size: clamp(34px, 10.8vw, 52px);
+            line-height: 1.08;
+            margin-bottom: 20px;
           }
           .hero-desc {
-            line-height: 1.6;
+            font-size: 15px;
+            line-height: 1.65;
           }
           .hero-stat-value {
             font-size: clamp(26px, 8vw, 36px);
           }
           .hero-layout {
-            gap: 32px !important;
+            gap: 28px !important;
           }
           .hero-actions {
             flex-direction: column;
+            margin-top: 24px;
+          }
+          .hero-btn {
+            min-height: 50px;
+          }
+          .hero-contact {
+            margin-top: 24px;
+            padding-top: 20px;
+            gap: 12px;
+          }
+          .hero-stats {
+            margin-top: 36px;
+          }
+          .hero-deal-img-wrap {
+            height: 200px;
+          }
+          .hero-deal-title {
+            font-size: 21px;
           }
           .hero-btn {
             width: 100%;
@@ -918,6 +943,11 @@ export default function Hero() {
         }
 
         @media (max-width: 680px) {
+          /* AnniversaryBadge is its own component, so Hero's scoped styles
+             can't reach it — hide it for phones from this global block. */
+          .hero-badge {
+            display: none;
+          }
           .hero-stat {
             padding: 16px 18px;
             border-right: 0 !important;

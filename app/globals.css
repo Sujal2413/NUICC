@@ -84,6 +84,11 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
 }
 
+/* Anchor jumps land below the fixed pill nav. */
+[id] {
+  scroll-margin-top: 100px;
+}
+
 /* ── Noise Overlay ───────────────────────── */
 .noise {
   position: fixed;
@@ -582,17 +587,17 @@ h6,
   }
 
   .section {
-    padding: 84px 0;
+    padding: 64px 0;
   }
 
   .section-head {
-    gap: 18px;
-    margin-bottom: 28px;
+    gap: 16px;
+    margin-bottom: 26px;
   }
 
   .section-title {
-    font-size: clamp(30px, 10.5vw, 48px);
-    line-height: 1.15;
+    font-size: clamp(27px, 8.6vw, 40px);
+    line-height: 1.12;
   }
 
   .headline {
@@ -603,13 +608,14 @@ h6,
 
   .lead,
   .body-copy {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.65;
   }
 
   .quote {
-    padding: 18px;
-    font-size: 24px;
+    padding: 16px;
+    font-size: 20px;
+    margin-top: 20px;
   }
 
   .btn {
@@ -649,6 +655,21 @@ h6,
     height: 220px;
     margin-left: -85px;
     margin-top: -110px;
+  }
+
+  [id] {
+    scroll-margin-top: 84px;
+  }
+
+  .menu-overlay .menu-item {
+    font-size: clamp(32px, 9.5vw, 42px);
+    padding: 6px 0;
+  }
+
+  /* Keep the overlay CTA off the screen edges. */
+  .menu-overlay .btn {
+    width: calc(100% - 48px);
+    max-width: 340px;
   }
 }
 

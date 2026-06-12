@@ -380,6 +380,10 @@ export default function Contact() {
         @media (max-width: 680px) {
           footer {
             flex-direction: column !important;
+            margin-top: 56px !important;
+          }
+          .contact-grid {
+            gap: 20px !important;
           }
         }
 

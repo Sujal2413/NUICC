@@ -61,7 +61,7 @@ export default function Membership() {
           {BENEFITS.map((b) => (
             <article
               key={b.num}
-              className="reveal"
+              className="reveal benefit-card"
               style={{
                 minHeight: 390,
                 display: "flex",
@@ -86,10 +86,10 @@ export default function Membership() {
               />
               <span className="eyebrow" style={{ position: "relative" }}>{b.num}</span>
               <div style={{ position: "relative" }}>
-                <h3 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: 58, lineHeight: 0.9 }}>
+                <h3 className="benefit-title" style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: 58, lineHeight: 0.9 }}>
                   {b.title}
                 </h3>
-                <p style={{ margin: "16px 0 0", opacity: 0.72, lineHeight: 1.75 }}>
+                <p className="benefit-desc" style={{ margin: "16px 0 0", opacity: 0.72, lineHeight: 1.75 }}>
                   {b.desc}
                 </p>
               </div>
@@ -113,6 +113,20 @@ export default function Membership() {
         @media (max-width: 680px) {
           .benefit-grid {
             grid-template-columns: 1fr !important;
+            gap: 14px !important;
+          }
+          .benefit-card {
+            min-height: 0 !important;
+            padding: 22px !important;
+            gap: 20px;
+          }
+          .benefit-title {
+            font-size: 32px !important;
+          }
+          .benefit-desc {
+            font-size: 14.5px !important;
+            line-height: 1.65 !important;
+            margin-top: 12px !important;
           }
         }
       `}</style>

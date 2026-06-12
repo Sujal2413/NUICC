@@ -59,10 +59,10 @@ export default function Industries() {
                 background: "rgba(255,250,240,.07)",
               }}
             >
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: 34, lineHeight: 1, marginBottom: 12 }}>
+              <h3 className="ind-title" style={{ fontFamily: "var(--font-display)", fontSize: 34, lineHeight: 1, marginBottom: 12 }}>
                 {ind.title}
               </h3>
-              <p style={{ color: "rgba(248,242,231,.68)", fontSize: 14, marginBottom: 0 }}>
+              <p className="ind-sub" style={{ color: "rgba(248,242,231,.68)", fontSize: 14, marginBottom: 0 }}>
                 {ind.sub}
               </p>
             </article>
@@ -108,8 +108,23 @@ export default function Industries() {
           }
         }
         @media (max-width: 680px) {
+          /* Two compact tiles per row read as designed-for-mobile; a single
+             column of 8 oversized cards scrolls forever. */
           .industries-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 10px !important;
+          }
+          .ind-card {
+            min-height: 0 !important;
+            padding: 16px 14px !important;
+          }
+          .ind-title {
+            font-size: 18px !important;
+            line-height: 1.1 !important;
+            margin-bottom: 6px !important;
+          }
+          .ind-sub {
+            font-size: 12px !important;
           }
         }
       `}</style>

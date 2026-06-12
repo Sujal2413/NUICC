@@ -149,13 +149,13 @@ export default function About() {
       {/* Vision & Mission */}
       <div className="wrap" style={{ marginTop: 64 }}>
         <div className="vm-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
-          <div className="reveal" style={{ padding: 32, background: "rgba(4,171,20,.06)", border: "1px solid rgba(4,171,20,.2)", borderRadius: "var(--radius)" }}>
+          <div className="reveal vm-card" style={{ padding: 32, background: "rgba(4,171,20,.06)", border: "1px solid rgba(4,171,20,.2)", borderRadius: "var(--radius)" }}>
             <h3 style={{ color: "#04ab14", fontSize: 24, fontFamily: "var(--font-display)", marginBottom: 12 }}>OUR VISION</h3>
             <p style={{ color: "var(--ink)", lineHeight: 1.8, marginBottom: 0 }}>
               The chamber&apos;s vision is to promote a business and cultural climate between the United States and India, and potentially other countries which motivates and empowers individuals to create value in the pursuit of prosperity and fulfillment.
             </p>
           </div>
-          <div className="reveal" style={{ padding: 32, background: "rgba(4,171,20,.06)", border: "1px solid rgba(4,171,20,.2)", borderRadius: "var(--radius)" }}>
+          <div className="reveal vm-card" style={{ padding: 32, background: "rgba(4,171,20,.06)", border: "1px solid rgba(4,171,20,.2)", borderRadius: "var(--radius)" }}>
             <h3 style={{ color: "#04ab14", fontSize: 24, fontFamily: "var(--font-display)", marginBottom: 12 }}>OUR MISSION</h3>
             <p style={{ color: "var(--ink)", lineHeight: 1.8, marginBottom: 0 }}>
               The chamber&apos;s mission is to promote bilateral trade between the United States and India, cultivating business relationships that will result in business deals.
@@ -164,7 +164,7 @@ export default function About() {
         </div>
 
         {/* Quotes */}
-        <div className="reveal" style={{ marginTop: 32, padding: "0 32px" }}>
+        <div className="reveal about-quotes" style={{ marginTop: 32, padding: "0 32px" }}>
           <p style={{ fontStyle: "italic", fontWeight: 600, color: "var(--ink)", lineHeight: 1.8, marginBottom: 16 }}>
             &ldquo;India has the fastest growing economy in the world... Together, our countries can help chart an optimistic path into the future, one that unleashes the power of new technology, new infrastructure, and the enthusiasm and excitement of very hardworking and very dynamic people.&rdquo; ~Donald Trump
           </p>
@@ -212,6 +212,23 @@ export default function About() {
             bottom: auto !important;
             width: 100% !important;
             margin-top: 14px;
+          }
+          .vm-card {
+            padding: 22px !important;
+          }
+          .vm-card h3 {
+            font-size: 20px !important;
+          }
+          .vm-card p {
+            line-height: 1.65 !important;
+            font-size: 15px;
+          }
+          .about-quotes {
+            padding: 0 !important;
+          }
+          .about-quotes p {
+            font-size: 14.5px;
+            line-height: 1.7 !important;
           }
         }
       `}</style>

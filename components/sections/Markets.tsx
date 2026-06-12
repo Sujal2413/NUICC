@@ -31,7 +31,7 @@ export default function Markets() {
   return (
     <section
       ref={sectionRef}
-      className="section"
+      className="section market-section"
       style={{
         minHeight: "100svh",
         display: "grid",
@@ -48,7 +48,7 @@ export default function Markets() {
           style={{ display: "grid", gridTemplateColumns: ".72fr 1fr", gap: 36, alignItems: "stretch" }}
         >
           <div
-            className="reveal"
+            className="reveal market-panel"
             style={{
               padding: 34,
               border: "1px solid rgba(217,179,109,.24)",
@@ -67,7 +67,7 @@ export default function Markets() {
             {MARKET_ITEMS.map((item) => (
               <div
                 key={item.code}
-                className="reveal"
+                className="reveal market-item"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "64px 1fr",
@@ -80,10 +80,10 @@ export default function Markets() {
                   borderRadius: "var(--radius)",
                 }}
               >
-                <b style={{ color: "var(--champagne)", fontFamily: "var(--font-display)", fontSize: 31, lineHeight: 1 }}>
+                <b className="market-code" style={{ color: "var(--champagne)", fontFamily: "var(--font-display)", fontSize: 31, lineHeight: 1 }}>
                   {item.code}
                 </b>
-                <span style={{ color: "rgba(248,242,231,.72)", lineHeight: 1.6 }}>
+                <span className="market-desc" style={{ color: "rgba(248,242,231,.72)", lineHeight: 1.6 }}>
                   {item.desc}
                 </span>
               </div>
@@ -96,6 +96,30 @@ export default function Markets() {
         @media (max-width: 1040px) {
           .market-grid {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 680px) {
+          .market-section {
+            min-height: 0 !important;
+          }
+          .market-grid {
+            gap: 20px !important;
+          }
+          .market-panel {
+            padding: 22px !important;
+          }
+          .market-item {
+            grid-template-columns: 42px 1fr !important;
+            gap: 14px !important;
+            padding: 14px !important;
+            align-items: start !important;
+          }
+          .market-code {
+            font-size: 23px !important;
+            margin-top: 2px;
+          }
+          .market-desc {
+            font-size: 14.5px !important;
           }
         }
       `}</style>

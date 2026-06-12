@@ -101,19 +101,6 @@
 
   /* Spacing: all numeric Tailwind spacing utilities derive from NUICC's base spacing token. */
   --spacing: var(--space-1);
-  --spacing-0: var(--space-0);
-  --spacing-1: var(--space-1);
-  --spacing-2: var(--space-2);
-  --spacing-3: var(--space-3);
-  --spacing-4: var(--space-4);
-  --spacing-5: var(--space-5);
-  --spacing-6: var(--space-6);
-  --spacing-7: var(--space-7);
-  --spacing-8: var(--space-8);
-  --spacing-9: var(--space-9);
-  --spacing-10: var(--space-10);
-  --spacing-11: var(--space-11);
-  --spacing-12: var(--space-12);
 
   /* Radii */
   --radius-xs: var(--radius-xs);
@@ -205,6 +192,138 @@
     color: var(--color-accent-strong);
   }
   .overline-label--inverse { color: var(--gold-300); }
+
+  /* Reference-style eyebrow: small caps label with a trailing hairline dash */
+  .eyebrow-dash {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-overline);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+  }
+  .eyebrow-dash::after {
+    content: "";
+    display: block;
+    width: var(--space-9);
+    height: calc(var(--space-1) / 4);
+    background: var(--gold-300);
+  }
+  .eyebrow-dash--inverse { color: var(--gold-300); }
+  .eyebrow-dash--inverse::after { background: color-mix(in srgb, var(--gold-300) 55%, transparent); }
+  .eyebrow-dash--center::after { width: var(--space-7); }
+
+  /* Formal card from the reference: sharp white panel, hairline border,
+     and a navy rule along the bottom edge that warms to gold on hover. */
+  .card-formal {
+    position: relative;
+    background: var(--color-surface);
+    border: var(--border-hairline);
+    border-radius: var(--radius-xs);
+    box-shadow: var(--shadow-xs);
+  }
+  .card-formal::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: calc(var(--space-1) * .75);
+    background: var(--navy-800);
+    transition: background-color var(--duration-normal) var(--ease-standard);
+  }
+  .card-formal:hover::after { background: var(--gold-500); }
+
+  /* Hero photograph wash: enough navy on the left for the headline to
+     carry, then it lets the photograph glow — with a warm daybreak tint
+     toward the right edge. */
+  .hero-wash {
+    background:
+      radial-gradient(
+        50% 60% at 88% 22%,
+        color-mix(in srgb, var(--gold-400) 16%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(
+        100deg,
+        color-mix(in srgb, var(--navy-900) 82%, transparent) 12%,
+        color-mix(in srgb, var(--navy-900) 44%, transparent) 52%,
+        color-mix(in srgb, var(--navy-800) 8%, transparent)
+      );
+  }
+
+  /* Soft seam from the hero into the ivory page — no dark-to-light slam. */
+  .hero-fade-bottom {
+    background: linear-gradient(180deg, transparent, var(--color-bg));
+  }
+
+  /* Soft morning light pooling at the top of a light section. */
+  .section-glow {
+    background:
+      radial-gradient(
+        56% 40% at 50% 0%,
+        color-mix(in srgb, var(--gold-100) 55%, transparent),
+        transparent 72%
+      );
+  }
+
+  /* The bright "accent of office" band: warm gold field for the closing CTA. */
+  .cta-bright {
+    background:
+      radial-gradient(
+        48% 70% at 85% 30%,
+        color-mix(in srgb, var(--stone-0) 60%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(135deg, var(--gold-100), var(--gold-50));
+  }
+
+  /* Footer: lifted from near-black to a deep but luminous navy. */
+  .footer-dark {
+    background: linear-gradient(180deg, var(--navy-800), var(--navy-900));
+  }
+
+  /* Decorative concentric rings on the founder panel (reference motif). */
+  .founder-rings {
+    --ring-line: calc(var(--space-1) / 4);
+    --ring-one: calc(var(--space-12) - var(--space-2));
+    --ring-two: calc(var(--space-12) + var(--space-7) + var(--space-3));
+    --ring-three: calc((var(--space-12) * 2) - var(--space-4));
+    background:
+      radial-gradient(circle at 85% 20%, transparent calc(var(--ring-one) - var(--ring-line)), var(--color-border-inverse) var(--ring-one), transparent calc(var(--ring-one) + var(--ring-line))),
+      radial-gradient(circle at 85% 20%, transparent calc(var(--ring-two) - var(--ring-line)), var(--color-border-inverse) var(--ring-two), transparent calc(var(--ring-two) + var(--ring-line))),
+      radial-gradient(circle at 85% 20%, transparent calc(var(--ring-three) - var(--ring-line)), var(--color-border-inverse) var(--ring-three), transparent calc(var(--ring-three) + var(--ring-line)));
+  }
+
+  /* Header chrome colors live here (not utilities) so the overlay variant
+     can override them within the same cascade layer. */
+  .header-link { color: var(--color-text); }
+  .header-link:hover { color: var(--color-link-hover); }
+  .header-phone { color: var(--navy-700); }
+  .header-phone:hover { color: var(--color-link-hover); }
+  .header-phone-chip { background: var(--navy-50); color: var(--navy-700); }
+  .header-menu-btn { color: var(--navy-800); }
+
+  /* Header over the hero: transparent, white text; solidifies on scroll. */
+  .header-overlay {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .header-overlay .header-link { color: var(--color-text-on-inverse); }
+  .header-overlay .header-link:hover { color: var(--gold-300); }
+  .header-overlay .header-phone { color: var(--color-text-on-inverse); }
+  .header-overlay .header-phone-chip {
+    background: color-mix(in srgb, var(--stone-0) 14%, transparent);
+    color: var(--color-text-on-inverse);
+  }
+  .header-overlay .header-menu-btn { color: var(--color-text-on-inverse); }
+  .header-logo-plate {
+    background: var(--color-surface);
+    border-radius: var(--radius-xs);
+    padding: var(--space-1) var(--space-2);
+  }
 
   /* The "gold rule" — short accent line under section titles */
   .gold-rule {

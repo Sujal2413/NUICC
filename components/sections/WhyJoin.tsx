@@ -13,16 +13,17 @@ const pillarIcons = [
 /** Why Join NUICC — Access, Expertise, Influence. */
 export function WhyJoin() {
   return (
-    <section className="section">
+    <section className="section relative isolate">
+      <div aria-hidden="true" className="section-glow absolute inset-0 -z-10" />
       <div className="container-site">
         <SectionHeader overline="Membership" title="Why Join NUICC?" seal lead={whyJoin.intro} />
         <Reveal stagger className="grid gap-6 md:grid-cols-3">
           {whyJoin.pillars.map((pillar, i) => (
             <article
               key={pillar.title}
-              className="card-lift card-gold-top flex h-full flex-col rounded-card border border-line bg-surface p-7 shadow-xs"
+              className="card-lift card-formal flex h-full flex-col p-7"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-md border border-gold-200 bg-gold-50 text-navy-700">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xs border border-line bg-stone-50 text-navy-700">
                 {pillarIcons[i]}
               </span>
               <h3 className="mt-4 font-serif text-h4">{pillar.title}</h3>

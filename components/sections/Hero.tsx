@@ -7,7 +7,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Mail, Phone, BadgeCheck, Facebook, Instagram, Linkedin } from "lucide-react";
-import { hero, site, socials, aboutIntro } from "@/lib/content";
+import { HeadingReveal } from "@/components/motion/HeadingReveal";
+import { hero, site, socials } from "@/lib/content";
 import { isCaptureMode } from "@/lib/captureMode";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -28,10 +29,10 @@ const socialIcons: Record<string, React.ReactNode> = {
 };
 
 /**
- * Hero: left-aligned diplomatic composition — commemorative ribbons, display
- * headline, CTAs, credential line, and a framed photograph of the Founder
- * with the Prime Minister of India as immediate proof of standing. Gentle
- * parallax (desktop) and a sequenced entrance, all behind motion guards.
+ * Full-bleed hero in the reference composition: photograph across the whole
+ * viewport, dark wash from the left, serif headline revealed line by line,
+ * one primary action. The photograph breathes with a very slow zoom and a
+ * gentle scroll parallax — all behind motion guards.
  */
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -47,11 +48,16 @@ export function Hero() {
           y: "var(--space-5)",
           duration: 0.8,
           ease: "power3.out",
-          stagger: 0.1,
+          stagger: 0.12,
+          delay: 0.25,
         });
+        // The slow "Ken Burns" breath on the photograph.
+        gsap.fromTo(
+          root.querySelector("[data-hero-photo]"),
+          { scale: 1.08 },
+          { scale: 1, duration: 2.4, ease: "power2.out" },
+        );
       });
-      // Parallax only on larger screens — on throttled mobile CPUs the
-      // hydration-time transform repaints the LCP image and tanks LCP.
       mm.add("(prefers-reduced-motion: no-preference) and (min-width: 48rem)", () => {
         gsap.to(root.querySelector("[data-hero-bg]"), {
           yPercent: 12,
@@ -64,58 +70,57 @@ export function Hero() {
   );
 
   return (
-    <section ref={ref} aria-label="Welcome" className="relative isolate overflow-hidden bg-navy-900">
+    <section
+      ref={ref}
+      aria-label="Welcome"
+      className="relative isolate flex min-h-[92svh] flex-col justify-center overflow-hidden bg-navy-900"
+    >
       <div data-hero-bg className="absolute inset-[-12%_0_0_0]">
-        <Image
-          src={hero.background}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          quality={50}
-          className="object-cover opacity-30"
-        />
-        <div
-          aria-hidden="true"
-          className="hero-gradient-overlay absolute inset-0"
-        />
-        {/* Quiet gold aura behind the photo column */}
-        <div
-          aria-hidden="true"
-          className="hero-gold-aura absolute inset-0"
-        />
+        <div data-hero-photo className="absolute inset-0">
+          <Image
+            src={hero.background}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            quality={50}
+            className="object-cover opacity-70"
+          />
+        </div>
+        <div aria-hidden="true" className="hero-wash absolute inset-0" />
       </div>
+      <div aria-hidden="true" className="hero-fade-bottom absolute inset-x-0 bottom-0 h-28" />
 
-      <div className="container-site relative grid items-center gap-12 pb-20 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="text-center lg:text-left">
-          <div data-hero-seq>
+      <div className="container-site relative pb-24 pt-32">
+        <div className="max-w-3xl text-left">
+          <div data-hero-seq className="flex flex-wrap items-center gap-4">
             <Image
               src={hero.ribbonTop.src}
               alt={hero.ribbonTop.alt}
-              width={300}
-              height={50}
+              width={240}
+              height={40}
               priority
-              className="mx-auto h-auto w-56 lg:mx-0"
+              className="h-auto w-44"
             />
-          </div>
-          <div data-hero-seq>
             <Image
               src={hero.ribbon.src}
               alt={hero.ribbon.alt}
-              width={560}
-              height={74}
+              width={420}
+              height={56}
               priority
-              className="mx-auto mt-3 h-auto w-full max-w-md lg:mx-0"
+              className="h-auto w-72"
             />
           </div>
-          <h1 data-hero-seq className="mt-7 font-serif text-display font-semibold leading-tight text-stone-0">
-            {hero.titleWhite}{" "}
-            <span className="text-gold-400">{hero.titleAccent}</span>
-          </h1>
-          <p data-hero-seq className="mx-auto mt-5 max-w-xl text-body-lg leading-relaxed text-on-inverse-soft lg:mx-0">
+          <HeadingReveal
+            as="h1"
+            className="mt-8 font-serif text-h1 font-semibold leading-tight text-stone-0 md:text-display"
+          >
+            {hero.titleWhite} <span className="text-gold-400">{hero.titleAccent}</span>
+          </HeadingReveal>
+          <p data-hero-seq className="mt-6 max-w-xl text-body-lg leading-relaxed text-on-inverse-soft">
             {hero.description}
           </p>
-          <div data-hero-seq className="mt-9 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+          <div data-hero-seq className="mt-9 flex flex-wrap items-center gap-4">
             <Link href={site.membershipUrl} className="btn-primary">
               Become a Member
             </Link>
@@ -123,14 +128,15 @@ export function Hero() {
               Explore Services
             </a>
           </div>
-          <p
-            data-hero-seq
-            className="mt-8 inline-flex flex-wrap items-center justify-center gap-2 rounded-pill border border-line-inverse bg-inverse-glass px-4 py-2 text-caption font-medium text-on-inverse lg:justify-start"
-          >
-            <BadgeCheck className="h-4 w-4 text-gold-400" aria-hidden="true" />
-            501(c)(6) Chamber of Commerce · 20+ years · 9,200+ members
-          </p>
-          <div data-hero-seq className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
+
+          <div data-hero-seq className="mt-12 flex max-w-full flex-wrap items-center gap-x-6 gap-y-4">
+            <p className="inline-flex max-w-full flex-wrap items-center gap-2 text-caption font-medium text-on-inverse">
+              <BadgeCheck className="h-4 w-4 text-gold-400" aria-hidden="true" />
+              <span className="min-w-0">
+                501(c)(6) Chamber of Commerce · 20+ years · 9,200+ members
+              </span>
+            </p>
+            <span aria-hidden="true" className="hidden h-4 w-px bg-line-inverse sm:block" />
             <span className="flex items-center gap-2">
               {socials.map((s) => (
                 <a
@@ -139,55 +145,24 @@ export function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`NUICC on ${s.label}`}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line-inverse text-on-inverse transition-colors hover:border-gold-400 hover:text-gold-300"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-line-inverse text-on-inverse transition-colors hover:border-gold-400 hover:text-gold-300"
                 >
                   {socialIcons[s.label]}
                 </a>
               ))}
             </span>
-            <span className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-body-sm text-on-inverse">
-              <a href={`mailto:${site.email}`} className="flex items-center gap-2 hover:text-gold-300">
-                <Mail className="h-4 w-4" aria-hidden="true" />
+            <span className="flex flex-wrap items-center gap-x-5 gap-y-2 text-caption text-on-inverse-soft">
+              <a href={`mailto:${site.email}`} className="flex items-center gap-1.5 hover:text-gold-300">
+                <Mail className="h-3.5 w-3.5" aria-hidden="true" />
                 {site.email}
               </a>
-              <a href={site.phoneHref} className="flex items-center gap-2 hover:text-gold-300">
-                <Phone className="h-4 w-4" aria-hidden="true" />
+              <a href={site.phoneHref} className="flex items-center gap-1.5 hover:text-gold-300">
+                <Phone className="h-3.5 w-3.5" aria-hidden="true" />
                 {site.phone}
               </a>
             </span>
           </div>
         </div>
-
-        {/* Framed credential photograph */}
-        <figure data-hero-seq className="relative mx-auto hidden w-full max-w-md lg:block">
-          <span
-            aria-hidden="true"
-            className="border-gold-soft absolute -inset-3 rotate-2 rounded-xl border"
-          />
-          <div className="relative overflow-hidden rounded-xl border border-gold-700/40 bg-navy-800 shadow-lg">
-            <Image
-              src={aboutIntro.photo.src}
-              alt={aboutIntro.photo.alt}
-              width={920}
-              height={620}
-              priority
-              sizes="28rem"
-              className="h-auto w-full object-cover"
-            />
-            <figcaption className="flex items-start gap-3 px-5 py-4">
-              <Image
-                src={aboutIntro.sealLogo.src}
-                alt=""
-                width={40}
-                height={40}
-                className="h-10 w-10 shrink-0 object-contain"
-              />
-              <span className="text-body-sm leading-snug text-on-inverse-soft">
-                {aboutIntro.photo.caption}
-              </span>
-            </figcaption>
-          </div>
-        </figure>
       </div>
     </section>
   );

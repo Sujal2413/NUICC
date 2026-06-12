@@ -23,7 +23,7 @@ import { Footer } from "@/components/sections/Footer";
 export default function HomePage() {
   return (
     <>
-      <Header />
+      <Header overlay />
       <main id="main">
         <Hero />
         <StatsBand />

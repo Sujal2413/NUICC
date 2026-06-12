@@ -20,7 +20,7 @@ const footerSocials = [
 
 export function Footer() {
   return (
-    <footer className="surface-inverse-gradient bg-inverse">
+    <footer className="footer-dark">
       <div className="container-site grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Image

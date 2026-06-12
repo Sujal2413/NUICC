@@ -10,7 +10,7 @@ export function StatsBand() {
       <div className="container-site">
         <Reveal
           stagger
-          className="grid grid-cols-2 gap-px overflow-hidden rounded-card border border-line bg-line shadow-md lg:grid-cols-4"
+          className="grid grid-cols-2 gap-px overflow-hidden rounded-card border border-line border-t-2 border-t-gold-500 bg-line shadow-md lg:grid-cols-4"
         >
           {heroStats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2 bg-surface px-4 py-6">

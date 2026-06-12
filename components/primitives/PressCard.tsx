@@ -8,7 +8,7 @@ export function PressCard({ item }: { item: PressLink }) {
       href={item.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="card-lift group flex h-full flex-col rounded-card border border-line bg-surface p-5 shadow-xs"
+      className="card-lift card-formal group flex h-full flex-col p-5"
     >
       <span className="overline-label">{item.source}</span>
       <span className="mt-2 flex-1 text-body-sm font-semibold text-ink group-hover:text-link-hover">

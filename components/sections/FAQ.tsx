@@ -6,7 +6,8 @@ import { faqs } from "@/lib/content";
 /** All 15 frequently asked questions. */
 export function FAQ() {
   return (
-    <section id="faq" className="section scroll-mt-24">
+    <section id="faq" className="section scroll-mt-24 relative isolate">
+      <div aria-hidden="true" className="section-glow absolute inset-0 -z-10" />
       <div className="container-site">
         <SectionHeader overline="Questions" title="Frequently Asked Questions" />
         <Reveal className="mx-auto max-w-3xl">

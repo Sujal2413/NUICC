@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { HeadingReveal } from "@/components/motion/HeadingReveal";
 import { aboutIntro } from "@/lib/content";
 
 type SectionHeaderProps = {
@@ -8,27 +9,46 @@ type SectionHeaderProps = {
   /** Show the 20-years seal under the title, as on the original site. */
   seal?: boolean;
   inverse?: boolean;
+  align?: "center" | "left";
   id?: string;
 };
 
-/** Centered section heading: overline eyebrow, serif title, gold rule, optional seal. */
-export function SectionHeader({ overline, title, lead, seal = false, inverse = false, id }: SectionHeaderProps) {
+/**
+ * Section heading in the reference language: small-caps eyebrow with a
+ * trailing hairline dash, then a serif title revealed line by line.
+ */
+export function SectionHeader({
+  overline,
+  title,
+  lead,
+  seal = false,
+  inverse = false,
+  align = "center",
+  id,
+}: SectionHeaderProps) {
+  const centered = align === "center";
   return (
-    <header className="mx-auto mb-10 max-w-3xl text-center" id={id}>
+    <header className={`mb-12 max-w-3xl ${centered ? "mx-auto text-center" : "text-left"}`} id={id}>
       {overline ? (
-        <p className={`overline-label ${inverse ? "overline-label--inverse" : ""} mb-3`}>{overline}</p>
+        <p
+          className={`eyebrow-dash ${inverse ? "eyebrow-dash--inverse" : ""} ${centered ? "eyebrow-dash--center" : ""} mb-4`}
+        >
+          {overline}
+        </p>
       ) : null}
-      <h2 className={`font-serif text-h2 ${inverse ? "text-on-inverse" : ""}`}>
+      <HeadingReveal
+        as="h2"
+        className={`font-serif text-h2 ${inverse ? "text-on-inverse" : "text-heading"}`}
+      >
         {title}
-      </h2>
-      <span className="gold-rule gold-rule--center" aria-hidden="true" />
+      </HeadingReveal>
       {seal ? (
         <Image
           src={aboutIntro.sealLogo.src}
           alt={aboutIntro.sealLogo.alt}
           width={88}
           height={88}
-          className="mx-auto mt-2 h-20 w-20 object-contain"
+          className={`mt-4 h-16 w-16 object-contain ${centered ? "mx-auto" : ""}`}
         />
       ) : null}
       {lead ? (

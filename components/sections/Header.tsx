@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, Menu, X, Facebook, Instagram, Linkedin } from "lucide-react";
@@ -22,25 +22,55 @@ const socialIcons: Record<string, React.ReactNode> = {
   LinkedIn: <Linkedin className="h-4 w-4" aria-hidden="true" />,
 };
 
+type HeaderProps = {
+  /** Float transparently over the hero (home); solidifies once scrolled. */
+  overlay?: boolean;
+};
+
 /**
- * Slim single-row institutional header: brand, primary navigation, direct
- * line, and the membership CTA. Socials and contact live in the mobile
- * drawer (and in the hero/footer on desktop).
+ * Slim single-row institutional header. In overlay mode it sits transparent
+ * over the hero photograph with white chrome, then settles into the solid
+ * surface bar after the first scroll — as in the reference motion.
  */
-export function Header() {
+export function Header({ overlay = false }: HeaderProps) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!overlay) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      setScrolled(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [overlay]);
+
+  const floating = overlay && !scrolled && !open;
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-line bg-surface/90 shadow-xs backdrop-blur-md">
+    <header
+      className={`${overlay ? "fixed" : "sticky"} inset-x-0 top-0 z-[100] border-b transition-[background-color,box-shadow,border-color] duration-300 ${
+        floating ? "header-overlay" : "border-line bg-surface/90 shadow-xs backdrop-blur-md"
+      }`}
+    >
       <div className="container-site flex h-[var(--nav-height)] items-center justify-between gap-6">
-        <Link href="/" aria-label="NUICC home" className="flex shrink-0 items-center">
+        <Link href="/" aria-label="NUICC home" className="header-logo-plate flex shrink-0 items-center">
           <Image
             src={headerLogo.src}
             alt={headerLogo.alt}
             width={170}
             height={44}
             priority
-            className="h-10 w-auto object-contain"
+            className="h-9 w-auto object-contain"
           />
         </Link>
 
@@ -50,7 +80,7 @@ export function Header() {
               <li key={item.label}>
                 <Link
                   href={item.href}
-                  className="group relative py-2 text-body-sm font-medium text-ink transition-colors hover:text-link-hover"
+                  className="header-link group relative whitespace-nowrap py-2 text-body-sm font-medium transition-colors"
                 >
                   {item.label}
                   <span
@@ -66,9 +96,9 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-4">
           <a
             href={site.phoneHref}
-            className="hidden items-center gap-2 text-body-sm font-semibold text-navy-700 transition-colors hover:text-link-hover xl:flex"
+            className="header-phone hidden items-center gap-2 text-body-sm font-semibold transition-colors xl:flex"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-50 text-navy-700">
+            <span className="header-phone-chip flex h-9 w-9 items-center justify-center rounded-full">
               <Phone className="h-4 w-4" aria-hidden="true" />
             </span>
             {site.phone}
@@ -78,7 +108,7 @@ export function Header() {
           </Link>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-sm text-navy-800 lg:hidden"
+            className="header-menu-btn flex h-10 w-10 items-center justify-center rounded-sm lg:hidden"
             aria-expanded={open}
             aria-controls="site-menu"
             aria-label={open ? "Close menu" : "Open menu"}

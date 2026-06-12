@@ -1,4 +1,9 @@
-/** Formal pull-quote from a dignitary, with the gold rule as the mark of office. */
+import { Quote } from "lucide-react";
+
+/**
+ * Formal quotation card in the reference's testimonial language: a large
+ * quotation mark, the words, the name — over a navy rule of office.
+ */
 export function DignitaryQuote({
   text,
   attribution,
@@ -7,12 +12,14 @@ export function DignitaryQuote({
   attribution: string;
 }) {
   return (
-    <figure className="rounded-card border border-line bg-surface p-6 shadow-xs md:p-8">
-      <span className="gold-rule" aria-hidden="true" />
-      <blockquote className="font-serif text-body-lg italic leading-relaxed text-heading">
+    <figure className="card-lift card-formal flex h-full flex-col items-center p-8 text-center">
+      <Quote className="h-8 w-8 rotate-180 text-stone-300" aria-hidden="true" />
+      <blockquote className="mt-4 flex-1 font-serif text-body-lg italic leading-relaxed text-heading">
         {text}
       </blockquote>
-      <figcaption className="mt-4 text-body-sm font-semibold text-secondary">{attribution}</figcaption>
+      <figcaption className="mt-5 text-body-sm font-semibold tracking-wide text-link">
+        {attribution}
+      </figcaption>
     </figure>
   );
 }

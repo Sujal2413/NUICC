@@ -2,6 +2,7 @@ import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { SectionHeader } from "@/components/primitives/SectionHeader";
 import { ContactForm } from "@/components/sections/ContactForm";
+import { ContactMap } from "@/components/sections/ContactMap";
 import { Reveal } from "@/components/motion/Reveal";
 import { contact, site } from "@/lib/content";
 
@@ -14,13 +15,7 @@ export function Contact() {
         <SectionHeader overline="Get in Touch" title="Contact Us" />
         <Reveal className="grid items-stretch gap-8 lg:grid-cols-2">
           <div className="flex flex-col justify-between rounded-card border border-line bg-surface p-6 shadow-xs">
-            <Image
-              src={contact.map.src}
-              alt={contact.map.alt}
-              width={1000}
-              height={560}
-              className="h-auto w-full rounded-md object-cover"
-            />
+            <ContactMap />
             <address className="mt-6 space-y-3 not-italic">
               <p className="flex items-start gap-3 text-body-sm text-secondary">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" aria-hidden="true" />

@@ -53,8 +53,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-img {
+img,
+svg,
+video {
   display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+html,
+body {
   max-width: 100%;
 }
 
@@ -152,8 +160,23 @@ body::before {
   margin-bottom: 0;
   font-family: var(--font-display);
   font-size: clamp(42px, 7vw, 88px);
-  line-height: 0.92;
+  line-height: 0.95;
   font-weight: 700;
+}
+
+/* Headings must never hyphenate or split words mid-character. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.section-title,
+.headline,
+.hero-headline {
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 .lead {
@@ -523,7 +546,7 @@ body::before {
 
 @media (max-width: 680px) {
   .wrap {
-    width: min(100% - 28px, 1180px);
+    width: min(100% - 32px, 1180px);
   }
 
   .section {
@@ -536,20 +559,20 @@ body::before {
   }
 
   .section-title {
-    font-size: clamp(40px, 14vw, 58px);
-    line-height: 0.96;
+    font-size: clamp(30px, 10.5vw, 48px);
+    line-height: 1.15;
   }
 
   .headline {
-    font-size: clamp(40px, 15vw, 64px);
-    line-height: 0.9;
+    font-size: clamp(32px, 11.5vw, 56px);
+    line-height: 1.12;
     margin: 18px 0 18px;
   }
 
   .lead,
   .body-copy {
     font-size: 16px;
-    line-height: 1.72;
+    line-height: 1.6;
   }
 
   .quote {

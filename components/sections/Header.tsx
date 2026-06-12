@@ -70,6 +70,7 @@ export default function Header() {
           <img
             src="/assets/img/home/nicuu-page.png"
             alt="NUICC logo"
+            className="brand-logo"
             style={{
               width: 48,
               height: 48,
@@ -79,8 +80,9 @@ export default function Header() {
               borderRadius: "var(--radius)",
             }}
           />
-          <div>
+          <div style={{ minWidth: 0 }}>
             <strong
+              className="brand-title"
               style={{
                 display: "block",
                 color: "var(--ivory)",
@@ -96,6 +98,7 @@ export default function Header() {
               Chamber of Commerce
             </strong>
             <span
+              className="brand-sub"
               style={{
                 display: "block",
                 marginTop: 4,
@@ -245,7 +248,7 @@ export default function Header() {
 
       {/* ── Responsive styles ─────────────── */}
       <style jsx>{`
-        @media (max-width: 1040px) {
+        @media (max-width: 1024px) {
           .nav-links-desktop {
             display: none !important;
           }
@@ -259,9 +262,28 @@ export default function Header() {
         @media (max-width: 680px) {
           #main-nav {
             top: 10px !important;
-            width: calc(100% - 20px) !important;
-            min-height: 62px !important;
-            padding: 8px 10px !important;
+            width: calc(100% - 16px) !important;
+            min-height: 60px !important;
+            padding: 8px 12px !important;
+            gap: 10px !important;
+          }
+          .brand-logo {
+            width: 40px !important;
+            height: 40px !important;
+          }
+          .brand-title {
+            font-size: 12px !important;
+          }
+          .brand-sub {
+            font-size: 9px !important;
+          }
+        }
+        @media (max-width: 380px) {
+          .brand-sub {
+            display: none !important;
+          }
+          .brand-title {
+            font-size: 11px !important;
           }
         }
       `}</style>

@@ -24,7 +24,7 @@ export default function FounderMessage() {
   return (
     <section
       ref={sectionRef}
-      className="section"
+      className="section founder-bg"
       style={{
         background: `
           linear-gradient(90deg, rgba(7,17,29,.96), rgba(7,17,29,.7)),
@@ -35,7 +35,7 @@ export default function FounderMessage() {
     >
       <div className="wrap">
         <div
-          className="reveal"
+          className="reveal founder-panel"
           style={{
             width: "min(760px, 100%)",
             padding: 40,
@@ -60,6 +60,24 @@ export default function FounderMessage() {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        /* fixed attachment is unreliable on mobile Safari — scroll it there. */
+        @media (max-width: 1024px) {
+          .founder-bg {
+            background-attachment: scroll !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .founder-panel {
+            padding: 24px !important;
+          }
+          .founder-panel p {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

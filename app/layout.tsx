@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import SplashCursor from "@/components/motion/SplashCursor";
@@ -24,6 +24,11 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "NUICC | National U.S.-India Chamber of Commerce",

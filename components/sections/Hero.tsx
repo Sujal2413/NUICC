@@ -198,14 +198,17 @@ export default function Hero() {
     return () => clearTimeout(t);
   }, []);
 
-  // Stats counter trigger
+  // Stats counter trigger — animates up once, then stays (no re-counting).
   useEffect(() => {
     const el = railRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setStatsVisible(true);
+          if (entry.isIntersecting) {
+            setStatsVisible(true);
+            observer.disconnect();
+          }
         });
       },
       { threshold: 0.3 }
@@ -783,8 +786,14 @@ export default function Hero() {
             padding: 110px 0 30px;
           }
           .hero-headline {
-            font-size: clamp(40px, 14vw, 60px);
-            line-height: 0.92;
+            font-size: clamp(32px, 11.5vw, 56px);
+            line-height: 1.12;
+          }
+          .hero-desc {
+            line-height: 1.6;
+          }
+          .hero-stat-value {
+            font-size: clamp(26px, 8vw, 36px);
           }
           .hero-layout {
             gap: 32px !important;

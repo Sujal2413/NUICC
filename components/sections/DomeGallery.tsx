@@ -20,123 +20,40 @@ const ROW_2 = [
   { img: "/assets/img/vip/DrV_Dixit.jpeg", name: "With Amb. Dixit" },
 ];
 
-function MarqueeRow({ items, direction, speed }: { items: typeof ROW_1; direction: "left" | "right"; speed: number }) {
-  const trackRef = useRef<HTMLDivElement>(null);
+type Item = { img: string; name: string };
 
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    let raf: number;
-    let pos = direction === "left" ? 0 : -(track.scrollWidth / 2);
-    const step = direction === "left" ? -speed : speed;
-
-    const animate = () => {
-      pos += step;
-      const half = track.scrollWidth / 2;
-
-      if (direction === "left" && pos <= -half) pos = 0;
-      if (direction === "right" && pos >= 0) pos = -half;
-
-      track.style.transform = `translate3d(${pos}px, 0, 0)`;
-      raf = requestAnimationFrame(animate);
-    };
-    raf = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(raf);
-  }, [direction, speed]);
-
-  // Duplicate items for seamless loop
-  const doubled = [...items, ...items];
-
+function Card({ item }: { item: Item }) {
   return (
-    <div className="gl-marquee-row">
-      <div ref={trackRef} className="gl-marquee-track">
-        {doubled.map((item, i) => (
-          <div key={i} className="gl-card">
-            <div className="gl-card-inner">
-              <img src={item.img} alt={item.name} loading="lazy" />
-              <div className="gl-card-overlay">
-                <span className="gl-card-name">{item.name}</span>
-              </div>
-              {/* Gold corner accents */}
-              <div className="gl-corner gl-corner--tl" />
-              <div className="gl-corner gl-corner--br" />
-            </div>
-          </div>
-        ))}
+    <div className="gl-card">
+      <div className="gl-card-inner">
+        <img src={item.img} alt={item.name} loading="lazy" />
+        <div className="gl-card-overlay">
+          <span className="gl-card-name">{item.name}</span>
+        </div>
+        <div className="gl-corner gl-corner--tl" />
+        <div className="gl-corner gl-corner--br" />
       </div>
     </div>
   );
 }
 
-/* ─── 3D Dome Arc (desktop) ───────────────────
-   A concave museum wall: every card sits on the inside of a cylinder via
-   rotateY(angle) → translateZ(-R), and scrolling through the tall section
-   pans the whole wall so each portrait sweeps past center stage. */
-function DomeArc({ items }: { items: typeof ROW_1 }) {
-  const stickyRef = useRef<HTMLDivElement>(null);
-  const wallRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const sticky = stickyRef.current;
-    const wall = wallRef.current;
-    if (!sticky || !wall) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const track = sticky.parentElement!;
-      const rect = track.getBoundingClientRect();
-      const range = rect.height - window.innerHeight;
-      const p = range > 0 ? Math.min(1, Math.max(0, -rect.top / range)) : 0.5;
-      const rotation = -62 + p * 124; // pan the wall across the full arc
-      wall.style.transform = `translateZ(-260px) rotateY(${rotation}deg)`;
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const STEP = 13; // degrees between portraits
-  const RADIUS = 1400; // concave wall radius
-  const startAngle = -((items.length - 1) / 2) * STEP;
-
+/**
+ * Pure-CSS infinite marquee. The track holds the items twice, so animating
+ * translate3d from 0 to -50% lands exactly on the duplicate and loops with
+ * zero visual seam. Linear easing + GPU compositing = no stutter; no scroll
+ * listener, no rAF loop, nothing tied to the page scroll position.
+ */
+function MarqueeRow({ items, direction, duration }: { items: Item[]; direction: "left" | "right"; duration: number }) {
+  const doubled = [...items, ...items];
   return (
-    <div className="dome-track">
-      <div ref={stickyRef} className="dome-sticky">
-        <div className="dome-stage">
-          <div ref={wallRef} className="dome-wall">
-            {items.map((item, i) => (
-              <div
-                key={item.img}
-                className="dome-card"
-                style={{
-                  transform: `rotateY(${startAngle + i * STEP}deg) translateZ(-${RADIUS}px)`,
-                }}
-              >
-                <div className="gl-card-inner">
-                  <img src={item.img} alt={item.name} loading="lazy" />
-                  <div className="gl-card-overlay">
-                    <span className="gl-card-name">{item.name}</span>
-                  </div>
-                  <div className="gl-corner gl-corner--tl" />
-                  <div className="gl-corner gl-corner--br" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="gl-fade-left" />
-        <div className="gl-fade-right" />
+    <div className="gl-marquee-row">
+      <div
+        className={`gl-marquee-track ${direction === "right" ? "gl-marquee-track--reverse" : ""}`}
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {doubled.map((item, i) => (
+          <Card key={`${item.img}-${i}`} item={item} />
+        ))}
       </div>
     </div>
   );
@@ -161,12 +78,10 @@ export default function DomeGallery() {
     return () => observer.disconnect();
   }, []);
 
-  const ALL = [...ROW_1, ...ROW_2];
-
   return (
-    <section ref={sectionRef} id="leaders" className="section section-dark" style={{ paddingBottom: 80 }}>
+    <section ref={sectionRef} id="leaders" className="section section-dark gl-section">
       {/* Header */}
-      <div className="wrap" style={{ marginBottom: 48 }}>
+      <div className="wrap" style={{ marginBottom: 40 }}>
         <div style={{ textAlign: "center", maxWidth: 700, margin: "0 auto" }}>
           <div className="eyebrow reveal" style={{ justifyContent: "center" }}>Global Leaders</div>
           <h2 className="section-title reveal" style={{ marginTop: 16 }}>
@@ -178,89 +93,56 @@ export default function DomeGallery() {
         </div>
       </div>
 
-      {/* Desktop: 3D dome wall, panned by scroll */}
-      <div className="dome-only">
-        <DomeArc items={ALL} />
-      </div>
-
-      {/* Mobile / fallback: dual-direction marquee rows */}
-      <div className="marquee-only" style={{ position: "relative" }}>
-        <div className="gl-gallery">
-          <MarqueeRow items={ROW_1} direction="left" speed={0.4} />
-          <MarqueeRow items={ROW_2} direction="right" speed={0.3} />
-        </div>
+      {/* Infinite marquee — two opposing rows, GPU-composited */}
+      <div className="gl-gallery">
+        <MarqueeRow items={ROW_1} direction="left" duration={28} />
+        <MarqueeRow items={ROW_2} direction="right" duration={34} />
         <div className="gl-fade-left" />
         <div className="gl-fade-right" />
       </div>
 
       <style jsx global>{`
-        /* ── Dome (desktop) ───────────── */
-        .dome-track {
-          height: 240vh;
-          position: relative;
-        }
-        .dome-sticky {
-          position: sticky;
-          top: 0;
-          height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-        }
-        .dome-stage {
-          width: 100%;
-          height: 480px;
-          perspective: 1500px;
-          perspective-origin: 50% 42%;
-        }
-        .dome-wall {
-          position: absolute;
-          inset: 0;
-          transform-style: preserve-3d;
-          transform: translateZ(-260px) rotateY(0deg);
-          will-change: transform;
-        }
-        .dome-card {
-          position: absolute;
-          left: calc(50% - 150px);
-          top: calc(50% - 190px);
-          width: 300px;
-          height: 380px;
-          transform-style: preserve-3d;
-          backface-visibility: hidden;
-        }
-        .dome-only { display: block; }
-        .marquee-only { display: none; }
-        @media (max-width: 1040px), (prefers-reduced-motion: reduce) {
-          .dome-only { display: none; }
-          .marquee-only { display: block; }
+        /* Tight bottom — the next section hooks cleanly right below. */
+        .gl-section {
+          padding-bottom: 96px;
         }
 
-        /* ── Gallery Container ─────────── */
         .gl-gallery {
           position: relative;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 28px;
           overflow: hidden;
           padding: 0;
         }
 
-        /* ── Marquee Row ──────────────── */
+        /* ── Marquee ──────────────────── */
         .gl-marquee-row {
           overflow: hidden;
           position: relative;
         }
-        .gl-marquee-row:hover .gl-marquee-track {
-          /* Slow down on hover via will-change hint — actual pause handled by JS */
-        }
-
         .gl-marquee-track {
           display: flex;
           gap: 16px;
           width: max-content;
           will-change: transform;
+          transform: translate3d(0, 0, 0);
+          animation-name: gl-marquee;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        .gl-marquee-track--reverse {
+          animation-name: gl-marquee-reverse;
+        }
+        /* Never pauses — the rows glide continuously even on hover; the
+           portrait name still fades in on hover via .gl-card-inner:hover. */
+        @keyframes gl-marquee {
+          from { transform: translate3d(0, 0, 0); }
+          to { transform: translate3d(-50%, 0, 0); }
+        }
+        @keyframes gl-marquee-reverse {
+          from { transform: translate3d(-50%, 0, 0); }
+          to { transform: translate3d(0, 0, 0); }
         }
 
         /* ── Card ─────────────────────── */
@@ -269,7 +151,6 @@ export default function DomeGallery() {
           width: 300px;
           height: 380px;
         }
-
         .gl-card-inner {
           position: relative;
           width: 100%;
@@ -284,7 +165,6 @@ export default function DomeGallery() {
                       box-shadow 0.4s ease;
           cursor: pointer;
         }
-
         .gl-card-inner:hover {
           transform: scale(1.04) translateY(-6px);
           border-color: rgba(217, 179, 109, 0.5);
@@ -292,7 +172,6 @@ export default function DomeGallery() {
                       0 16px 40px rgba(0, 0, 0, 0.4);
           z-index: 10;
         }
-
         .gl-card-inner img {
           width: 100%;
           height: 100%;
@@ -300,7 +179,6 @@ export default function DomeGallery() {
           transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                       filter 0.4s ease;
         }
-
         .gl-card-inner:hover img {
           transform: scale(1.08);
         }
@@ -321,11 +199,9 @@ export default function DomeGallery() {
           opacity: 0.6;
           transition: opacity 0.4s ease;
         }
-
         .gl-card-inner:hover .gl-card-overlay {
           opacity: 1;
         }
-
         .gl-card-name {
           color: var(--ivory);
           font-size: 14px;
@@ -337,7 +213,6 @@ export default function DomeGallery() {
                       opacity 0.4s ease;
           opacity: 0;
         }
-
         .gl-card-inner:hover .gl-card-name {
           transform: translateY(0);
           opacity: 1;
@@ -394,14 +269,16 @@ export default function DomeGallery() {
             height: 330px;
           }
         }
-
         @media (max-width: 680px) {
+          .gl-section {
+            padding-bottom: 72px;
+          }
           .gl-card {
             width: 200px;
             height: 260px;
           }
           .gl-gallery {
-            gap: 10px;
+            gap: 18px;
           }
           .gl-marquee-track {
             gap: 10px;

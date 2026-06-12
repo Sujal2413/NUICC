@@ -45,10 +45,10 @@ function LaunchCard({ launch }: { launch: (typeof LAUNCHES)[0] }) {
 
 export default function FeaturedLaunches() {
   const sectionRef = useRef<HTMLElement>(null);
-  const rowRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
 
-  // Reveal-on-enter for the heading block.
+  // Reveal-on-enter for the heading + cards. No scroll hijacking anywhere:
+  // the carousel is a native overflow-x scroller, so vertical wheel/touch
+  // over it always moves the page, and horizontal intent scrolls the rail.
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -65,95 +65,59 @@ export default function FeaturedLaunches() {
     return () => observer.disconnect();
   }, []);
 
-  // Desktop: pin the row and translate it horizontally with scroll.
-  useEffect(() => {
-    const row = rowRef.current;
-    const track = trackRef.current;
-    if (!row || !track) return;
-    const mq = window.matchMedia("(min-width: 1041px) and (prefers-reduced-motion: no-preference)");
-
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      if (!mq.matches) {
-        row.style.transform = "";
-        return;
-      }
-      const rect = track.getBoundingClientRect();
-      const range = rect.height - window.innerHeight;
-      const p = range > 0 ? Math.min(1, Math.max(0, -rect.top / range)) : 0;
-      const maxShift = Math.max(0, row.scrollWidth - row.parentElement!.clientWidth);
-      row.style.transform = `translate3d(${-p * maxShift}px, 0, 0)`;
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
   return (
-    <section ref={sectionRef} id="launches" className="section-dark" style={{ position: "relative" }}>
-      <div ref={trackRef} className="fl-track">
-        <div className="fl-sticky">
-          <div className="wrap" style={{ paddingTop: 90 }}>
-            <div className="section-head" style={{ marginBottom: 34 }}>
-              <div>
-                <div className="eyebrow reveal">Featured Launches</div>
-                <h2 className="section-title reveal">Regional chapters expanding cross-border opportunity.</h2>
-              </div>
-              <p className="lead reveal" style={{ color: "var(--muted)" }}>
-                Recent launches strengthen trade, innovation, startup ecosystems, and trusted global networks between the United States and India.
-              </p>
-            </div>
+    <section ref={sectionRef} id="launches" className="section section-dark">
+      <div className="wrap">
+        <div className="section-head">
+          <div>
+            <div className="eyebrow reveal">Featured Launches</div>
+            <h2 className="section-title reveal">Regional chapters expanding cross-border opportunity.</h2>
           </div>
-          <div className="fl-viewport">
-            <div ref={rowRef} className="fl-row">
-              {LAUNCHES.map((launch) => (
-                <LaunchCard key={launch.title} launch={launch} />
-              ))}
-            </div>
-          </div>
+          <p className="lead reveal" style={{ color: "var(--muted)" }}>
+            Recent launches strengthen trade, innovation, startup ecosystems, and trusted global networks between the United States and India.
+          </p>
         </div>
       </div>
 
+      {/* Native scroll-snap carousel — never locks the page scroll. */}
+      <div className="fl-carousel reveal" role="group" aria-label="Featured launches">
+        {LAUNCHES.map((launch) => (
+          <LaunchCard key={launch.title} launch={launch} />
+        ))}
+      </div>
+
       <style jsx global>{`
-        /* Track gives scroll room; the stage stays pinned while cards glide. */
-        .fl-track {
-          height: 280vh;
-          position: relative;
-        }
-        .fl-sticky {
-          position: sticky;
-          top: 0;
-          height: 100vh;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-        .fl-viewport {
-          flex: 1;
-          overflow: hidden;
-          padding: 0 max(20px, calc((100vw - 1180px) / 2));
-          display: flex;
-          align-items: center;
-        }
-        .fl-row {
+        .fl-carousel {
           display: flex;
           gap: 22px;
-          will-change: transform;
+          overflow-x: auto;
+          overflow-y: hidden;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          /* room so first/last cards align with the page gutter */
+          padding: 4px max(20px, calc((100vw - 1180px) / 2)) 28px;
+          /* let vertical gestures bubble to the page; only horizontal pans here */
+          touch-action: pan-y;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(217, 179, 109, 0.4) transparent;
         }
+        .fl-carousel::-webkit-scrollbar {
+          height: 8px;
+        }
+        .fl-carousel::-webkit-scrollbar-thumb {
+          background: rgba(217, 179, 109, 0.4);
+          border-radius: 999px;
+        }
+        .fl-carousel::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
         .fl-card {
           position: relative;
-          flex-shrink: 0;
-          width: min(720px, 72vw);
-          height: min(56vh, 480px);
+          flex: 0 0 auto;
+          scroll-snap-align: start;
+          width: min(680px, 80vw);
+          height: min(56vh, 460px);
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
@@ -171,6 +135,10 @@ export default function FeaturedLaunches() {
           object-fit: cover;
           opacity: 0.88;
           transform: scale(1.06);
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fl-card:hover .fl-card-img {
+          transform: scale(1.12);
         }
         .fl-card-shade {
           position: absolute;
@@ -184,38 +152,24 @@ export default function FeaturedLaunches() {
         }
         .fl-card-title {
           font-family: var(--font-display);
-          font-size: clamp(32px, 4vw, 52px);
-          line-height: 1;
+          font-size: clamp(28px, 4vw, 48px);
+          line-height: 1.05;
           margin: 8px 0 12px;
         }
         .fl-card-desc {
           margin-bottom: 0;
           color: rgba(248, 242, 231, 0.68);
-          line-height: 1.75;
+          line-height: 1.6;
           max-width: 520px;
         }
 
-        /* Mobile / reduced motion: no pin, stacked cards. */
-        @media (max-width: 1040px), (prefers-reduced-motion: reduce) {
-          .fl-track {
-            height: auto;
-          }
-          .fl-sticky {
-            position: static;
-            height: auto;
-            overflow: visible;
-          }
-          .fl-viewport {
-            overflow: visible;
-            padding: 0 20px 60px;
-          }
-          .fl-row {
-            flex-direction: column;
-            transform: none !important;
-          }
+        @media (max-width: 680px) {
           .fl-card {
-            width: 100%;
+            width: 86vw;
             height: 420px;
+          }
+          .fl-card-body {
+            padding: 22px;
           }
         }
       `}</style>

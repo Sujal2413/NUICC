@@ -43,7 +43,7 @@ export default function ExecutiveCommittee() {
           {COMMITTEE.map((member, i) => (
             <div
               key={i}
-              className="reveal"
+              className="reveal exec-row"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
@@ -70,6 +70,16 @@ export default function ExecutiveCommittee() {
           ))}
         </div>
       </div>
+
+      <style jsx>{`
+        @media (max-width: 640px) {
+          .exec-row {
+            grid-template-columns: 1fr !important;
+            gap: 6px;
+            padding: 16px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

@@ -97,13 +97,13 @@ export default function Services() {
                 cursor: "default",
               }}
             >
-              <span style={{ display: "block", marginBottom: 46, color: "var(--champagne)", fontSize: 12, fontWeight: 900, letterSpacing: ".18em" }}>
+              <span className="svc-num" style={{ display: "block", marginBottom: 46, color: "var(--champagne)", fontSize: 12, fontWeight: 900, letterSpacing: ".18em" }}>
                 {service.num}
               </span>
-              <h3 style={{ marginBottom: 12, fontFamily: "var(--font-display)", fontSize: 34, lineHeight: 1 }}>
+              <h3 className="svc-title" style={{ marginBottom: 12, fontFamily: "var(--font-display)", fontSize: 34, lineHeight: 1 }}>
                 {service.title}
               </h3>
-              <p style={{ marginBottom: 0, color: "rgba(248,242,231,.68)", lineHeight: 1.75 }}>
+              <p className="svc-desc" style={{ marginBottom: 0, color: "rgba(248,242,231,.68)", lineHeight: 1.75 }}>
                 {service.desc}
               </p>
             </TiltCard>
@@ -140,6 +140,22 @@ export default function Services() {
         @media (prefers-reduced-motion: reduce) {
           .tilt-card { transition: none; }
           .tilt-glow { display: none; }
+        }
+        @media (max-width: 680px) {
+          .tilt-card {
+            min-height: 0 !important;
+            padding: 22px;
+          }
+          .svc-num {
+            margin-bottom: 16px !important;
+          }
+          .svc-title {
+            font-size: 23px !important;
+          }
+          .svc-desc {
+            font-size: 14.5px !important;
+            line-height: 1.65 !important;
+          }
         }
       `}</style>
       <style jsx>{`

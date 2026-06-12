@@ -164,12 +164,22 @@ export default function FeaturedLaunches() {
         }
 
         @media (max-width: 680px) {
+          .fl-carousel {
+            gap: 14px;
+            padding-bottom: 22px;
+          }
           .fl-card {
             width: 86vw;
-            height: 420px;
+            height: 390px;
           }
           .fl-card-body {
-            padding: 22px;
+            padding: 20px;
+          }
+          .fl-card-title {
+            font-size: 26px;
+          }
+          .fl-card-desc {
+            font-size: 14.5px;
           }
         }
       `}</style>

@@ -15,6 +15,10 @@ export default function PixelReveal({ children, cols = 12, rows = 8 }: PixelReve
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+    // threshold is a fraction of the TARGET: on phones these sections are
+    // several viewports tall, so a 0.2 threshold can never be reached and the
+    // pixel cover stays black while the user scrolls. Fire as soon as the
+    // section meaningfully enters the viewport instead.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -23,7 +27,7 @@ export default function PixelReveal({ children, cols = 12, rows = 8 }: PixelReve
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();

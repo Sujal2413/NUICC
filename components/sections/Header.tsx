@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const NAV_ITEMS = [
   { label: "About", href: "#about" },
@@ -27,6 +27,7 @@ function splitChars(text: string, baseDelay: number, itemIndex: number) {
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
 
   const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => !prev);
@@ -36,11 +37,39 @@ export default function Header() {
     setMenuOpen(false);
   }, []);
 
+  // On phones the pill nav competes with content for a small screen — tuck it
+  // away while scrolling down, bring it back on the first upward scroll.
+  // CSS limits the effect to <=768px; desktop never moves.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const goingDown = y > lastY + 4;
+      const goingUp = y < lastY - 4;
+      if (goingDown && y > 160) setNavHidden(true);
+      else if (goingUp || y <= 160) setNavHidden(false);
+      if (goingDown || goingUp) lastY = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Keep the page from scrolling underneath the open menu overlay.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [menuOpen]);
+
   return (
     <>
       {/* ── Floating Nav ─────────────────── */}
       <nav
         id="main-nav"
+        className={navHidden && !menuOpen ? "nav-hidden" : ""}
         style={{
           position: "fixed",
           top: 16,
@@ -259,23 +288,42 @@ export default function Header() {
             display: none !important;
           }
         }
+        @media (max-width: 768px) {
+          #main-nav {
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.35s ease;
+          }
+          #main-nav.nav-hidden {
+            transform: translateX(-50%) translateY(-140%) !important;
+            opacity: 0;
+            pointer-events: none;
+          }
+        }
         @media (max-width: 680px) {
           #main-nav {
             top: 10px !important;
             width: calc(100% - 16px) !important;
-            min-height: 60px !important;
-            padding: 8px 12px !important;
+            min-height: 54px !important;
+            padding: 7px 10px !important;
             gap: 10px !important;
           }
           .brand-logo {
+            width: 36px !important;
+            height: 36px !important;
+          }
+          .brand-title {
+            font-size: 11px !important;
+          }
+          .brand-sub {
+            font-size: 8.5px !important;
+            letter-spacing: 0.14em !important;
+          }
+          #menu-toggle {
             width: 40px !important;
             height: 40px !important;
           }
-          .brand-title {
-            font-size: 12px !important;
-          }
-          .brand-sub {
-            font-size: 9px !important;
+          #menu-toggle span {
+            left: 9px !important;
           }
         }
         @media (max-width: 380px) {

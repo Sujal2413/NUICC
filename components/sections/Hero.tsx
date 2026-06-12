@@ -658,12 +658,29 @@ export default function Hero() {
         /* ── Deal Card ───────────────────── */
         .hero-deal-card {
           position: relative;
-          border: 1px solid rgba(217,179,109,.2);
-          background: linear-gradient(180deg, rgba(255,250,240,.12), rgba(255,250,240,.04));
-          backdrop-filter: blur(24px);
-          border-radius: 12px;
+          border: 1px solid rgba(255,250,240,.18);
+          background:
+            radial-gradient(120% 80% at 15% 0%, rgba(255,250,240,.22), transparent 55%),
+            linear-gradient(180deg, rgba(255,250,240,.12), rgba(255,250,240,.04));
+          backdrop-filter: blur(26px) saturate(1.3);
+          -webkit-backdrop-filter: blur(26px) saturate(1.3);
+          border-radius: 14px;
           overflow: hidden;
-          box-shadow: 0 40px 100px rgba(0,0,0,.4);
+          box-shadow:
+            0 40px 100px rgba(0,0,0,.4),
+            inset 0 1px 0 rgba(255,255,255,.22);
+        }
+        /* soft reflective sheen across the glass */
+        .hero-deal-card::before {
+          content: "";
+          position: absolute;
+          top: -40%;
+          left: -20%;
+          width: 80%;
+          height: 80%;
+          background: radial-gradient(circle, rgba(255,255,255,.14), transparent 60%);
+          pointer-events: none;
+          z-index: 0;
         }
         .hero-deal-shine {
           position: absolute; inset: 0; z-index: 1;

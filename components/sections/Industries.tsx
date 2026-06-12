@@ -51,7 +51,7 @@ export default function Industries() {
           {INDUSTRIES.map((ind) => (
             <article
               key={ind.title}
-              className="reveal"
+              className="reveal ind-card"
               style={{
                 minHeight: 150, padding: 20,
                 border: "1px solid rgba(217,179,109,.2)",
@@ -71,6 +71,37 @@ export default function Industries() {
       </div>
 
       <style jsx>{`
+        .ind-card {
+          position: relative;
+          overflow: hidden;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+        }
+        .ind-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 3px;
+          width: 100%;
+          background: linear-gradient(90deg, var(--saffron), var(--champagne), var(--emerald));
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ind-card:hover {
+          transform: translateY(-6px);
+          background: rgba(255, 250, 240, 0.1);
+          border-color: rgba(217, 179, 109, 0.55) !important;
+          box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+        }
+        .ind-card:hover::before {
+          transform: scaleX(1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ind-card, .ind-card::before { transition: none; }
+        }
+
         @media (max-width: 1040px) {
           .industries-grid {
             grid-template-columns: repeat(2, 1fr) !important;

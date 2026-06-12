@@ -85,21 +85,28 @@ export default function FAQ() {
                   }}
                 >
                   {faq.q}
-                  <span style={{
-                    fontSize: 22,
-                    transition: "transform .3s ease",
-                    transform: openIndex === i ? "rotate(45deg)" : "none",
-                    flexShrink: 0,
-                    marginLeft: 16,
-                  }}>
-                    +
-                  </span>
+                  <svg
+                    width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2.5"
+                    strokeLinecap="round" strokeLinejoin="round"
+                    style={{
+                      transition: "transform .35s cubic-bezier(.16,1,.3,1)",
+                      transform: openIndex === i ? "rotate(180deg)" : "rotate(0deg)",
+                      flexShrink: 0,
+                      marginLeft: 16,
+                      color: openIndex === i ? "var(--saffron)" : "var(--gold)",
+                    }}
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
                 </button>
                 <div
                   style={{
-                    maxHeight: openIndex === i ? 200 : 0,
+                    maxHeight: openIndex === i ? 320 : 0,
+                    opacity: openIndex === i ? 1 : 0,
                     overflow: "hidden",
-                    transition: "max-height .4s ease",
+                    transition: "max-height .45s cubic-bezier(.16,1,.3,1), opacity .4s ease",
                   }}
                 >
                   <p style={{ margin: "12px 0 0", color: "var(--dark-muted)", lineHeight: 1.75 }}>

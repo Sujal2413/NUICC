@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Globe from "@/components/motion/Globe";
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -82,13 +83,17 @@ export default function Contact() {
               <strong>Email</strong><br />
               <a href="mailto:info@nuicc.org" style={{ color: "var(--champagne)" }}>info@nuicc.org</a>
             </p>
-            {/* Map */}
-            <div style={{ marginTop: 22, overflow: "hidden", borderRadius: "var(--radius)", border: "1px solid rgba(217,179,109,.2)" }}>
-              <img
-                src="/assets/img/home/World-Map.jpg"
-                alt="World map showing NUICC global reach"
-                style={{ width: "100%", height: 250, objectFit: "cover", filter: "sepia(.16) contrast(1.04)" }}
-              />
+            {/* Interactive globe — U.S.–India trade reach */}
+            <div
+              style={{
+                marginTop: 22,
+                overflow: "hidden",
+                borderRadius: "var(--radius)",
+                border: "1px solid rgba(217,179,109,.2)",
+                background: "radial-gradient(circle at 50% 40%, rgba(12,31,53,.6), rgba(7,17,29,.9))",
+              }}
+            >
+              <Globe height={250} />
             </div>
           </div>
 

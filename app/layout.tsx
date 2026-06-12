@@ -1,29 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Montserrat, Playfair_Display } from "next/font/google";
+import "@fontsource/inter/latin.css";
+import "@fontsource/montserrat/latin.css";
+import "@fontsource/playfair-display/latin.css";
+import "@fontsource/playfair-display/latin-italic.css";
 import "./globals.css";
 import SplashCursor from "@/components/motion/SplashCursor";
 import ProgressRail from "@/components/motion/ProgressRail";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-montserrat",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-playfair",
-  display: "swap",
-});
+import MagneticButtons from "@/components/motion/MagneticButtons";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -57,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${montserrat.variable} ${playfair.variable}`}>
+    <html lang="en">
       <body>
         {/* Noise texture overlay */}
         <div className="noise" aria-hidden="true" />
@@ -65,6 +48,8 @@ export default function RootLayout({
         <SplashCursor />
         {/* Scroll progress */}
         <ProgressRail />
+        {/* Magnetic hover on the gold CTAs */}
+        <MagneticButtons />
         {children}
       </body>
     </html>

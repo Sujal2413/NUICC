@@ -243,6 +243,9 @@ export default function Hero() {
         <div className="hero-orb hero-orb--4" />
       </div>
 
+      {/* ── Statues photograph (Unity ⟷ Liberty) ── */}
+      <div className="hero-photo" aria-hidden="true" />
+
       {/* ── Particle Field ─────────────────── */}
       <ParticleField />
 
@@ -374,6 +377,17 @@ export default function Hero() {
           isolation: isolate;
         }
 
+        /* ── Statues photo layer ─────────── */
+        .hero-photo {
+          position: absolute;
+          inset: 0;
+          z-index: -3;
+          background-image: url("/assets/img/home/hero-statues.jpg");
+          background-size: cover;
+          background-position: center 32%;
+          background-repeat: no-repeat;
+        }
+
         /* ── Gradient Mesh BG ────────────── */
         .hero-bg-mesh {
           position: absolute;
@@ -431,9 +445,9 @@ export default function Hero() {
         .hero-gradient-overlay {
           position: absolute; inset: 0; z-index: 1;
           background:
-            radial-gradient(ellipse at 80% 10%, rgba(217,179,109,.2), transparent 40%),
-            linear-gradient(180deg, rgba(7,17,29,.6), rgba(7,17,29,.85) 50%, rgba(7,17,29,.98)),
-            linear-gradient(90deg, rgba(7,17,29,.95), rgba(7,17,29,.5) 50%, rgba(7,17,29,.3));
+            radial-gradient(ellipse at 80% 8%, rgba(217,179,109,.18), transparent 42%),
+            linear-gradient(180deg, rgba(7,17,29,.42), rgba(7,17,29,.8) 56%, rgba(7,17,29,.98)),
+            linear-gradient(90deg, rgba(7,17,29,.9), rgba(7,17,29,.45) 55%, rgba(7,17,29,.28));
           pointer-events: none;
         }
         .hero-bottom-glow {

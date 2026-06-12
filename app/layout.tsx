@@ -1,76 +1,56 @@
-import type { Metadata } from "next";
-import { LenisProvider } from "@/components/motion/LenisProvider";
-import { site } from "@/lib/content";
+import type { Metadata, Viewport } from "next";
+import "@fontsource/inter/latin.css";
+import "@fontsource/montserrat/latin.css";
+import "@fontsource/playfair-display/latin.css";
+import "@fontsource/playfair-display/latin-italic.css";
 import "./globals.css";
+import SplashCursor from "@/components/motion/SplashCursor";
+import ProgressRail from "@/components/motion/ProgressRail";
+import MagneticButtons from "@/components/motion/MagneticButtons";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: {
-    default: "National U.S.-India Chamber of Commerce | NUICC",
-    template: "%s | NUICC",
-  },
+  title: "NUICC | National U.S.-India Chamber of Commerce",
   description:
-    "NUICC is a 501(c)(6) chamber promoting bilateral trade between the United States and India — connecting businesses to the opportunities, partners, and policymakers that matter.",
+    "Connecting businesses, fostering trade relationships, and building bridges between the United States and India through strategic partnerships and comprehensive business deals.",
   keywords: [
-    "NUICC",
-    "US India Chamber of Commerce",
+    "US India trade",
+    "chamber of commerce",
     "bilateral trade",
-    "US India business",
-    "trade missions",
-    "Purnima Voria",
+    "NUICC",
+    "business matchmaking",
+    "India market entry",
   ],
   openGraph: {
-    type: "website",
-    url: site.url,
-    siteName: site.name,
-    title: "National U.S.-India Chamber of Commerce",
+    title: "NUICC | National U.S.-India Chamber of Commerce",
     description:
       "Your gateway to strategic partnership for business deals between the United States and India.",
-    images: [{ url: "/assets/img/home/NUICC_Logo.png", alt: site.name }],
+    type: "website",
+    url: "https://nuicc.org",
   },
-  twitter: {
-    card: "summary_large_image",
-    site: "@NUICC",
-  },
-  icons: { icon: "/assets/img/favicon.png" },
 };
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: site.name,
-  alternateName: site.shortName,
-  url: site.url,
-  logo: `${site.url}/assets/img/home/NUICC_Logo.png`,
-  email: site.email,
-  telephone: "+1-720-323-3728",
-  nonprofitStatus: "Nonprofit501c6",
-  founder: { "@type": "Person", name: "Dr. Purnima Voria" },
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "1099 17th St, Suite 2150",
-    addressLocality: "Denver",
-    addressRegion: "CO",
-    postalCode: "80202",
-    addressCountry: "US",
-  },
-  sameAs: [
-    "https://www.facebook.com/www.nuicc.info/",
-    "https://x.com/NUICC",
-    "https://www.linkedin.com/company/nuicc/",
-  ],
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-
-        <LenisProvider>{children}</LenisProvider>
+        {/* Noise texture overlay */}
+        <div className="noise" aria-hidden="true" />
+        {/* Splash cursor glow */}
+        <SplashCursor />
+        {/* Scroll progress */}
+        <ProgressRail />
+        {/* Magnetic hover on the gold CTAs */}
+        <MagneticButtons />
+        {children}
       </body>
     </html>
   );

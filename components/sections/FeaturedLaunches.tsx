@@ -1,289 +1,178 @@
-import Image from "next/image";
-import { Check } from "lucide-react";
-import { SectionHeader } from "@/components/primitives/SectionHeader";
-import { YouTubeFacade } from "@/components/primitives/YouTubeFacade";
-import { PressCard } from "@/components/primitives/PressCard";
-import { EventCardGrid } from "@/components/primitives/EventCardGrid";
-import { ExpandableText } from "@/components/primitives/ExpandableText";
-import { SocialEmbedFacade } from "@/components/primitives/SocialEmbedFacade";
-import { Reveal } from "@/components/motion/Reveal";
-import {
-  featuredLaunchesIntro,
-  northwestLaunch,
-  bangaloreLaunch,
-  rajasthanLaunch,
-} from "@/lib/content";
+"use client";
 
-function LaunchCard({ children }: { children: React.ReactNode }) {
+import { useEffect, useRef } from "react";
+
+const LAUNCHES = [
+  {
+    region: "Pacific Northwest",
+    title: "Northwest U.S.-India Chamber",
+    desc: "Launched March 19, 2025 with the Bellevue Chamber of Commerce, serving nine Northwest states.",
+    img: "/assets/img/event/Feature_launches_1.png",
+  },
+  {
+    region: "South India",
+    title: "Bangalore Branch",
+    desc: "A strategic hub connecting U.S. companies to Bengaluru's AI, IT, manufacturing, clean energy, and startup ecosystem.",
+    img: "/assets/img/gallery/AUS_Cham.png",
+  },
+  {
+    region: "New York",
+    title: "Rajasthan Foundation Chapter",
+    desc: "Strengthening U.S.-Rajasthan collaboration, investment, diaspora engagement, and cultural ties.",
+    img: "/assets/img/gallery/DrV_Amb_Kwatra.png",
+  },
+  {
+    region: "Media Center",
+    title: "Global Business Moments",
+    desc: "Launch ceremonies, diplomatic meetings, press coverage, and executive gatherings across both countries.",
+    img: "/assets/img/event/image_3section_2.png",
+  },
+];
+
+function LaunchCard({ launch }: { launch: (typeof LAUNCHES)[0] }) {
   return (
-    <article className="mt-12 rounded-card border border-line bg-surface p-6 shadow-sm md:p-10">
-      {children}
+    <article className="fl-card">
+      <img src={launch.img} alt={launch.title} loading="lazy" className="fl-card-img" />
+      <div className="fl-card-shade" />
+      <div className="fl-card-body">
+        <div className="eyebrow">{launch.region}</div>
+        <h3 className="fl-card-title">{launch.title}</h3>
+        <p className="fl-card-desc">{launch.desc}</p>
+      </div>
     </article>
   );
 }
 
-function LaunchHeading({
-  heading,
-  tagline,
-  subline,
-  subheading,
-}: {
-  heading: string;
-  tagline?: string;
-  subline: string;
-  subheading?: string;
-}) {
+export default function FeaturedLaunches() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Reveal-on-enter for the heading + cards. No scroll hijacking anywhere:
+  // the carousel is a native overflow-x scroller, so vertical wheel/touch
+  // over it always moves the page, and horizontal intent scrolls the rail.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const reveals = section.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      },
+      { threshold: 0.1 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <header className="text-center">
-      <h3 className="font-serif text-h3 text-heading">{heading}</h3>
-      <span className="gold-rule gold-rule--center" aria-hidden="true" />
-      {tagline ? <p className="text-body-lg italic text-secondary">{tagline}</p> : null}
-      <p className="mt-1 text-body-sm text-muted">{subline}</p>
-      {subheading ? (
-        <h4 className="mx-auto mt-5 max-w-2xl font-serif text-h4 text-heading">{subheading}</h4>
-      ) : null}
-    </header>
-  );
-}
-
-function MediaCenter({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mt-8">
-      <h4 className="mb-5 text-center font-serif text-h4 text-heading">Media Center</h4>
-      {children}
-    </div>
-  );
-}
-
-/**
- * Featured Launches — all three regional chapters: Northwest, Bangalore, and
- * the Rajasthan Foundation New York Chapter, with every photo, video, social
- * embed, and press link from the original site.
- */
-export function FeaturedLaunches() {
-  return (
-    <section id="features" className="section scroll-mt-24 bg-sunken">
-      <div className="container-site">
-        <SectionHeader overline="Regional Chapters" title="Featured Launches" seal />
-
-        <Reveal className="mx-auto max-w-4xl space-y-4 text-body text-secondary">
-          {featuredLaunchesIntro.paragraphs.map((p) => (
-            <p key={p.slice(0, 40)}>{p}</p>
-          ))}
-        </Reveal>
-
-        <Reveal stagger className="mt-8 grid gap-6 md:grid-cols-2">
-          {featuredLaunchesIntro.images.map((img) => (
-            <figure key={img.src} className="overflow-hidden rounded-card border border-line shadow-sm">
-              <Image
-                src={img.src}
-                alt={img.alt}
-                width={900}
-                height={600}
-                className="h-auto w-full object-cover"
-              />
-            </figure>
-          ))}
-        </Reveal>
-        <Reveal className="mt-4 text-center">
-          <p className="mx-auto max-w-3xl text-body font-semibold text-ink">
-            {featuredLaunchesIntro.caption}
+    <section ref={sectionRef} id="launches" className="section section-dark">
+      <div className="wrap">
+        <div className="section-head">
+          <div>
+            <div className="eyebrow reveal">Featured Launches</div>
+            <h2 className="section-title reveal">Regional chapters expanding cross-border opportunity.</h2>
+          </div>
+          <p className="lead reveal" style={{ color: "var(--muted)" }}>
+            Recent launches strengthen trade, innovation, startup ecosystems, and trusted global networks between the United States and India.
           </p>
-        </Reveal>
-
-        {/* ===== Northwest ===== */}
-        <Reveal>
-          <LaunchCard>
-            <LaunchHeading
-              heading={northwestLaunch.heading}
-              tagline={northwestLaunch.tagline}
-              subline={northwestLaunch.subline}
-              subheading={northwestLaunch.subheading}
-            />
-            <div className="mt-6">
-              <ExpandableText more={<p>{northwestLaunch.more}</p>}>
-                <p>{northwestLaunch.body}</p>
-              </ExpandableText>
-            </div>
-            <p className="mt-6 text-body font-semibold text-ink">{northwestLaunch.closing}</p>
-
-            <MediaCenter>
-              <div className="grid gap-6 md:grid-cols-2">
-                {northwestLaunch.videos.map((video, i) => (
-                  <YouTubeFacade key={`${video.id}-${i}`} id={video.id} title={video.title} poster={video.poster} />
-                ))}
-              </div>
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
-                {northwestLaunch.press.map((item) => (
-                  <PressCard key={item.href} item={item} />
-                ))}
-              </div>
-            </MediaCenter>
-
-            <div className="mt-8">
-              <EventCardGrid cards={northwestLaunch.eventCards} />
-            </div>
-          </LaunchCard>
-        </Reveal>
-
-        {/* ===== Bangalore ===== */}
-        <Reveal>
-          <LaunchCard>
-            <LaunchHeading
-              heading={bangaloreLaunch.heading}
-              subline={bangaloreLaunch.subline}
-              subheading={bangaloreLaunch.subheading}
-            />
-            <div className="mt-6">
-              <ExpandableText more={<p>{bangaloreLaunch.more}</p>}>
-                <p>{bangaloreLaunch.body}</p>
-              </ExpandableText>
-            </div>
-
-            <p className="mt-6 text-body text-secondary">{bangaloreLaunch.hubIntro}</p>
-            <ul className="mt-3 space-y-2">
-              {bangaloreLaunch.hubPoints.map((point) => (
-                <li key={point} className="flex gap-3 text-body-sm text-secondary">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-500" aria-hidden="true" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 text-body font-semibold text-ink">{bangaloreLaunch.closing}</p>
-
-            <MediaCenter>
-              <div className="grid gap-6 md:grid-cols-2">
-                {bangaloreLaunch.videos.map((video, i) => (
-                  <YouTubeFacade key={`${video.id}-${i}`} id={video.id} title={video.title} poster={video.poster} />
-                ))}
-              </div>
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
-                {bangaloreLaunch.press.map((item) => (
-                  <PressCard key={item.href} item={item} />
-                ))}
-              </div>
-            </MediaCenter>
-
-            <div className="mt-8">
-              <h4 className="mb-5 text-center font-serif text-h4 text-heading">
-                {bangaloreLaunch.galleryTitle}
-              </h4>
-              <Reveal stagger className="grid grid-cols-2 gap-4 md:grid-cols-3">
-                {bangaloreLaunch.gallery.map((img) => (
-                  <figure key={img.src} className="relative aspect-[4/3] overflow-hidden rounded-card border border-line shadow-xs">
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      sizes="(max-width: 48rem) 50vw, 33vw"
-                      className="object-cover"
-                    />
-                  </figure>
-                ))}
-              </Reveal>
-            </div>
-          </LaunchCard>
-        </Reveal>
-
-        {/* ===== Rajasthan Foundation NY ===== */}
-        <Reveal>
-          <LaunchCard>
-            <LaunchHeading heading={rajasthanLaunch.heading} subline={rajasthanLaunch.subline} />
-            <div className="mt-6">
-              <ExpandableText
-                more={
-                  <>
-                    <ul className="space-y-2">
-                      {rajasthanLaunch.points.map((point) => (
-                        <li key={point.slice(0, 40)} className="flex gap-3 text-body-sm text-secondary">
-                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-500" aria-hidden="true" />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                    {rajasthanLaunch.outro.map((p) => (
-                      <p key={p.slice(0, 40)}>{p}</p>
-                    ))}
-                  </>
-                }
-              >
-                {rajasthanLaunch.paragraphs.map((p) => (
-                  <p key={p.slice(0, 40)}>{p}</p>
-                ))}
-              </ExpandableText>
-            </div>
-
-            <MediaCenter>
-              <div className="grid gap-6 md:grid-cols-3">
-                {rajasthanLaunch.videos.map((video, i) => (
-                  <YouTubeFacade key={`${video.id}-${i}`} id={video.id} title={video.title} poster={video.poster} />
-                ))}
-                <div className="overflow-hidden rounded-card bg-navy-900 shadow-sm">
-                  <SocialEmbedFacade
-                    embedSrc={rajasthanLaunch.facebookVideo.href}
-                    href="https://www.facebook.com/1stIndiaNews/videos/1191246206285907/"
-                    title={rajasthanLaunch.facebookVideo.title}
-                    network="facebook"
-                    poster={rajasthanLaunch.facebookVideo.poster}
-                    size="compact"
-                  />
-                </div>
-              </div>
-
-              <div className="mt-6 grid gap-4 md:grid-cols-3">
-                {rajasthanLaunch.instagramReels.map((reel) => (
-                  <div key={reel.href} className="overflow-hidden rounded-card border border-line shadow-xs">
-                    <SocialEmbedFacade
-                      embedSrc={`${reel.href}embed/`}
-                      href={reel.href}
-                      title="NUICC on Instagram"
-                      network="instagram"
-                      poster={reel.poster}
-                    />
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
-                {rajasthanLaunch.press.map((item) => (
-                  <PressCard key={item.href} item={item} />
-                ))}
-              </div>
-            </MediaCenter>
-
-            <Reveal stagger className="mt-8 grid gap-6 md:grid-cols-2">
-              {rajasthanLaunch.photos.map((photo) => (
-                <figure
-                  key={photo.src}
-                  className="overflow-hidden rounded-card border border-line bg-surface shadow-xs"
-                >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    width={900}
-                    height={620}
-                    className="h-auto w-full object-cover"
-                  />
-                  {"caption" in photo && photo.caption ? (
-                    <figcaption className="p-4">
-                      {"title" in photo && photo.title ? (
-                        <span className="block font-serif text-h4 text-heading">{photo.title}</span>
-                      ) : null}
-                      <span className="mt-1 block text-body-sm font-semibold text-secondary">
-                        {photo.caption}
-                      </span>
-                    </figcaption>
-                  ) : null}
-                </figure>
-              ))}
-            </Reveal>
-
-            <div className="mt-8">
-              <EventCardGrid cards={rajasthanLaunch.eventCards} />
-            </div>
-          </LaunchCard>
-        </Reveal>
+        </div>
       </div>
+
+      {/* Native scroll-snap carousel — never locks the page scroll. */}
+      <div className="fl-carousel reveal" role="group" aria-label="Featured launches">
+        {LAUNCHES.map((launch) => (
+          <LaunchCard key={launch.title} launch={launch} />
+        ))}
+      </div>
+
+      <style jsx global>{`
+        .fl-carousel {
+          display: flex;
+          gap: 22px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          /* room so first/last cards align with the page gutter */
+          padding: 4px max(20px, calc((100vw - 1180px) / 2)) 28px;
+          /* let vertical gestures bubble to the page; only horizontal pans here */
+          touch-action: pan-y;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(217, 179, 109, 0.4) transparent;
+        }
+        .fl-carousel::-webkit-scrollbar {
+          height: 8px;
+        }
+        .fl-carousel::-webkit-scrollbar-thumb {
+          background: rgba(217, 179, 109, 0.4);
+          border-radius: 999px;
+        }
+        .fl-carousel::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .fl-card {
+          position: relative;
+          flex: 0 0 auto;
+          scroll-snap-align: start;
+          width: min(680px, 80vw);
+          height: min(56vh, 460px);
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          overflow: hidden;
+          border: 1px solid rgba(217, 179, 109, 0.26);
+          border-radius: var(--radius);
+          background: var(--navy);
+          box-shadow: var(--shadow);
+        }
+        .fl-card-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.88;
+          transform: scale(1.06);
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fl-card:hover .fl-card-img {
+          transform: scale(1.12);
+        }
+        .fl-card-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 20%, rgba(7, 17, 29, 0.92));
+        }
+        .fl-card-body {
+          position: relative;
+          z-index: 1;
+          padding: 30px;
+        }
+        .fl-card-title {
+          font-family: var(--font-display);
+          font-size: clamp(28px, 4vw, 48px);
+          line-height: 1.05;
+          margin: 8px 0 12px;
+        }
+        .fl-card-desc {
+          margin-bottom: 0;
+          color: rgba(248, 242, 231, 0.68);
+          line-height: 1.6;
+          max-width: 520px;
+        }
+
+        @media (max-width: 680px) {
+          .fl-card {
+            width: 86vw;
+            height: 420px;
+          }
+          .fl-card-body {
+            padding: 22px;
+          }
+        }
+      `}</style>
     </section>
   );
 }

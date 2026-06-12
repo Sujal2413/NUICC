@@ -1,12 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  turbopack: { root: __dirname },
+  turbopack: { root: process.cwd() },
   images: {
-    qualities: [50, 75],
     remotePatterns: [
-      // YouTube poster frames for the lite video facades
-      { protocol: "https", hostname: "i.ytimg.com" },
+      { protocol: "https", hostname: "nuicc.org" },
+      { protocol: "https", hostname: "upload.wikimedia.org" },
     ],
   },
 };

@@ -1,57 +1,85 @@
-import Image from "next/image";
-import { FileText } from "lucide-react";
-import { SectionHeader } from "@/components/primitives/SectionHeader";
-import { Reveal } from "@/components/motion/Reveal";
-import { executiveCommittee, committeeBackground } from "@/lib/content";
+"use client";
 
-/** The formal officer table — a signature credibility component. */
-export function ExecutiveCommittee() {
+import { useEffect, useRef } from "react";
+
+const COMMITTEE = [
+  { role: "President", name: "Purnima Voria", link: "/assets/img/home/voria-bio.pdf" },
+  { role: "Vice President, Global Corporate Business Development", name: "Terry Evanston" },
+  { role: "Vice President of Operations", name: "Anne Bennett" },
+  { role: "Treasurer", name: "Anu Singh" },
+  { role: "Secretary of Technology & Executive Administrator", name: "Spencer Cloud" },
+];
+
+export default function ExecutiveCommittee() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const reveals = section.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      },
+      { threshold: 0.1 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="section relative isolate overflow-hidden">
-      <Image src={committeeBackground} alt="" fill sizes="100vw" className="-z-10 object-cover opacity-[0.07]" />
-      <div className="container-site">
-        <SectionHeader overline="Governance" title="NUICC Executive Committee" />
-        <Reveal className="mx-auto max-w-3xl overflow-hidden rounded-card border border-line shadow-sm">
-          <table className="w-full border-collapse bg-surface text-left">
-            <caption className="sr-only">NUICC Executive Committee officers</caption>
-            <thead className="sr-only">
-              <tr>
-                <th scope="col">Office</th>
-                <th scope="col">Officer</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line">
-              {executiveCommittee.map((member) => (
-                <tr key={member.role}>
-                  <th
-                    scope="row"
-                    className="w-[45%] bg-navy-800 px-5 py-4 align-top text-body-sm font-semibold text-on-inverse"
-                  >
-                    {member.role}
-                  </th>
-                  <td className="px-5 py-4 text-body-sm text-ink">
-                    {member.name}
-                    {"bio" in member && member.bio ? (
-                      <>
-                        {" — "}
-                        <a
-                          href={member.bio.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-medium text-link underline-offset-2 hover:text-link-hover hover:underline"
-                        >
-                          <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-                          {member.bio.label}
-                        </a>
-                      </>
-                    ) : null}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Reveal>
+    <section ref={sectionRef} className="section section-light">
+      <div className="wrap">
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <div className="eyebrow reveal" style={{ justifyContent: "center" }}>Leadership</div>
+          <h2 className="section-title reveal" style={{ color: "var(--ink)", marginTop: 16 }}>
+            NUICC Executive Committee
+          </h2>
+        </div>
+
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          {COMMITTEE.map((member, i) => (
+            <div
+              key={i}
+              className="reveal exec-row"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                borderBottom: i < COMMITTEE.length - 1 ? "1px solid rgba(17,24,35,.12)" : "none",
+                padding: "20px 0",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ fontWeight: 700, color: "var(--ink)", fontSize: 15 }}>
+                {member.role}
+              </div>
+              <div style={{ color: "var(--dark-muted)" }}>
+                {member.name}
+                {member.link && (
+                  <>
+                    {" — "}
+                    <a href={member.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--saffron)", fontWeight: 600 }}>
+                      Download Bio
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      <style jsx>{`
+        @media (max-width: 640px) {
+          .exec-row {
+            grid-template-columns: 1fr !important;
+            gap: 6px;
+            padding: 16px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

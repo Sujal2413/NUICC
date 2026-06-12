@@ -1,173 +1,292 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Phone, Mail, Menu, X, Facebook, Instagram, Linkedin } from "lucide-react";
-import { site, nav, socials, headerLogo } from "@/lib/content";
+import { useState, useCallback } from "react";
 
-/** Inline X (Twitter) mark — lucide has no current X logo. */
-function XLogo({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M18.244 2H21.5l-7.51 8.57L23 22h-7.078l-5.51-7.21L4.9 22H1.64l8.06-9.2L1 2h7.203l5.05 6.63L18.244 2zm-2.49 18h2.31L8.1 4h-2.4l10.054 16z" />
-    </svg>
-  );
+const NAV_ITEMS = [
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Leaders", href: "#leaders" },
+  { label: "Membership", href: "#membership" },
+  { label: "Launches", href: "#launches" },
+  { label: "Contact", href: "#contact" },
+];
+
+function splitChars(text: string, baseDelay: number, itemIndex: number) {
+  return text.split("").map((char, i) => (
+    <span
+      key={i}
+      className="char"
+      style={{
+        transitionDelay: `${baseDelay + itemIndex * 80 + i * 30}ms`,
+      }}
+    >
+      {char === " " ? "\u00A0" : char}
+    </span>
+  ));
 }
 
-const socialIcons: Record<string, React.ReactNode> = {
-  Facebook: <Facebook className="h-4 w-4" aria-hidden="true" />,
-  Instagram: <Instagram className="h-4 w-4" aria-hidden="true" />,
-  X: <XLogo className="h-3.5 w-3.5" />,
-  LinkedIn: <Linkedin className="h-4 w-4" aria-hidden="true" />,
-};
+export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-type HeaderProps = {
-  /** Float transparently over the hero (home); solidifies once scrolled. */
-  overlay?: boolean;
-};
+  const toggleMenu = useCallback(() => {
+    setMenuOpen((prev) => !prev);
+  }, []);
 
-/**
- * Slim single-row institutional header. In overlay mode it sits transparent
- * over the hero photograph with white chrome, then settles into the solid
- * surface bar after the first scroll — as in the reference motion.
- */
-export function Header({ overlay = false }: HeaderProps) {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    if (!overlay) return;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      setScrolled(window.scrollY > 24);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [overlay]);
-
-  const floating = overlay && !scrolled && !open;
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+  }, []);
 
   return (
-    <header
-      className={`${overlay ? "fixed" : "sticky"} inset-x-0 top-0 z-[100] border-b transition-[background-color,box-shadow,border-color] duration-300 ${
-        floating ? "header-overlay" : "border-line bg-surface/90 shadow-xs backdrop-blur-md"
-      }`}
-    >
-      <div className="container-site flex h-[var(--nav-height)] items-center justify-between gap-6">
-        <Link href="/" aria-label="NUICC home" className="header-logo-plate flex shrink-0 items-center">
-          <Image
-            src={headerLogo.src}
-            alt={headerLogo.alt}
-            width={170}
-            height={44}
-            priority
-            className="h-9 w-auto object-contain"
+    <>
+      {/* ── Floating Nav ─────────────────── */}
+      <nav
+        id="main-nav"
+        style={{
+          position: "fixed",
+          top: 16,
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 50,
+          width: "min(1180px, calc(100% - 28px))",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 18,
+          minHeight: 70,
+          padding: "10px 12px 10px 14px",
+          border: "1px solid rgba(217,179,109,.24)",
+          background: "rgba(7,17,29,.72)",
+          backdropFilter: "blur(24px) saturate(1.25)",
+          boxShadow: "0 20px 70px rgba(0,0,0,.28)",
+          borderRadius: "var(--radius)",
+        }}
+      >
+        {/* Brand */}
+        <a
+          href="#home"
+          aria-label="NUICC home"
+          style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}
+        >
+          <img
+            src="/assets/img/home/nicuu-page.png"
+            alt="NUICC logo"
+            className="brand-logo"
+            style={{
+              width: 48,
+              height: 48,
+              objectFit: "contain",
+              padding: 4,
+              background: "var(--ivory)",
+              borderRadius: "var(--radius)",
+            }}
           />
-        </Link>
-
-        <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
-            {nav.map((item) => (
-              <li key={item.label}>
-                <Link
-                  href={item.href}
-                  className="header-link group relative whitespace-nowrap py-2 text-body-sm font-medium transition-colors"
-                >
-                  {item.label}
-                  <span
-                    aria-hidden="true"
-                    className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-gold-500 transition-all duration-300 group-hover:w-full"
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="flex shrink-0 items-center gap-4">
-          <a
-            href={site.phoneHref}
-            className="header-phone hidden items-center gap-2 text-body-sm font-semibold transition-colors xl:flex"
-          >
-            <span className="header-phone-chip flex h-9 w-9 items-center justify-center rounded-full">
-              <Phone className="h-4 w-4" aria-hidden="true" />
+          <div style={{ minWidth: 0 }}>
+            <strong
+              className="brand-title"
+              style={{
+                display: "block",
+                color: "var(--ivory)",
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                lineHeight: 1.1,
+                letterSpacing: ".04em",
+                textTransform: "uppercase",
+              }}
+            >
+              National U.S.-India
+              <br />
+              Chamber of Commerce
+            </strong>
+            <span
+              className="brand-sub"
+              style={{
+                display: "block",
+                marginTop: 4,
+                color: "var(--champagne)",
+                fontSize: 10,
+                fontWeight: 800,
+                letterSpacing: ".18em",
+                textTransform: "uppercase",
+              }}
+            >
+              Strategic Trade Alliance
             </span>
-            {site.phone}
-          </a>
-          <Link href={site.membershipUrl} className="btn-primary hidden lg:inline-flex">
-            Become a Member
-          </Link>
-          <button
-            type="button"
-            className="header-menu-btn flex h-10 w-10 items-center justify-center rounded-sm lg:hidden"
-            aria-expanded={open}
-            aria-controls="site-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
+          </div>
+        </a>
+
+        {/* Desktop Nav Links */}
+        <div
+          className="nav-links-desktop"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 24,
+            color: "rgba(248,242,231,.74)",
+            fontFamily: "var(--font-body)",
+            fontSize: 13,
+            fontWeight: 800,
+            letterSpacing: ".06em",
+            textTransform: "uppercase",
+          }}
+        >
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              style={{ position: "relative", padding: "8px 0" }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget;
+                el.style.color = "var(--champagne)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget;
+                el.style.color = "rgba(248,242,231,.74)";
+              }}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+
+        {/* CTA + Hamburger */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <a
+            href="https://nuicc.org/membership"
+            className="btn btn-light"
+            id="nav-cta"
+            style={{ fontSize: 12 }}
           >
-            {open ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
+            Become a Member
+          </a>
+          <button
+            id="menu-toggle"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            style={{
+              display: "none",
+              width: 44,
+              height: 44,
+              background: "transparent",
+              border: "1px solid rgba(217,179,109,.3)",
+              borderRadius: "var(--radius)",
+              cursor: "pointer",
+              position: "relative",
+              flexShrink: 0,
+            }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                left: 10,
+                top: menuOpen ? 20 : 14,
+                width: 22,
+                height: 2,
+                background: "var(--ivory)",
+                borderRadius: 2,
+                transform: menuOpen ? "rotate(45deg)" : "none",
+                transition: "all .3s ease",
+              }}
+            />
+            <span
+              style={{
+                position: "absolute",
+                left: 10,
+                top: menuOpen ? 20 : 26,
+                width: 22,
+                height: 2,
+                background: "var(--ivory)",
+                borderRadius: 2,
+                transform: menuOpen ? "rotate(-45deg)" : "none",
+                transition: "all .3s ease",
+              }}
+            />
           </button>
         </div>
+      </nav>
+
+      {/* ── Flowing Menu Overlay ─────────── */}
+      <div className={`menu-overlay ${menuOpen ? "open" : ""}`} id="flowing-menu">
+        <button
+          onClick={closeMenu}
+          aria-label="Close menu"
+          style={{
+            position: "absolute",
+            top: 24,
+            right: 24,
+            background: "transparent",
+            border: "none",
+            color: "var(--ivory)",
+            fontSize: 32,
+            cursor: "pointer",
+            zIndex: 10,
+          }}
+        >
+          ✕
+        </button>
+        <nav style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+          {NAV_ITEMS.map((item, idx) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="menu-item"
+              onClick={closeMenu}
+            >
+              {splitChars(item.label, 200, idx)}
+            </a>
+          ))}
+        </nav>
+        <a
+          href="https://nuicc.org/membership"
+          className="btn btn-light"
+          onClick={closeMenu}
+          style={{ marginTop: 40, fontSize: 14 }}
+        >
+          Become a Member
+        </a>
       </div>
 
-      {/* Mobile drawer */}
-      <nav
-        id="site-menu"
-        aria-label="Mobile"
-        className={`${open ? "block" : "hidden"} border-t border-line bg-surface lg:hidden`}
-      >
-        <div className="container-site flex flex-col gap-1 py-4">
-          <ul className="flex flex-col">
-            {nav.map((item) => (
-              <li key={item.label}>
-                <Link
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="block border-b border-line py-3 text-body font-medium text-ink transition-colors hover:text-link-hover"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-3 flex items-center gap-2">
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`NUICC on ${s.label}`}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-800 text-stone-0 transition-colors hover:bg-navy-700"
-              >
-                {socialIcons[s.label]}
-              </a>
-            ))}
-          </div>
-          <div className="mt-3 flex flex-col gap-2 text-body-sm font-medium text-navy-700">
-            <a href={site.phoneHref} className="flex items-center gap-2">
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              {site.phone}
-            </a>
-            <a href={`mailto:${site.email}`} className="flex items-center gap-2">
-              <Mail className="h-4 w-4" aria-hidden="true" />
-              {site.email}
-            </a>
-          </div>
-          <Link href={site.membershipUrl} onClick={() => setOpen(false)} className="btn-primary mt-4 w-full">
-            Become a Member
-          </Link>
-        </div>
-      </nav>
-    </header>
+      {/* ── Responsive styles ─────────────── */}
+      <style jsx>{`
+        @media (max-width: 1024px) {
+          .nav-links-desktop {
+            display: none !important;
+          }
+          #menu-toggle {
+            display: flex !important;
+          }
+          #nav-cta {
+            display: none !important;
+          }
+        }
+        @media (max-width: 680px) {
+          #main-nav {
+            top: 10px !important;
+            width: calc(100% - 16px) !important;
+            min-height: 60px !important;
+            padding: 8px 12px !important;
+            gap: 10px !important;
+          }
+          .brand-logo {
+            width: 40px !important;
+            height: 40px !important;
+          }
+          .brand-title {
+            font-size: 12px !important;
+          }
+          .brand-sub {
+            font-size: 9px !important;
+          }
+        }
+        @media (max-width: 380px) {
+          .brand-sub {
+            display: none !important;
+          }
+          .brand-title {
+            font-size: 11px !important;
+          }
+        }
+      `}</style>
+    </>
   );
 }

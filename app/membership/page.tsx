@@ -6,15 +6,43 @@ import { Component as BackgroundGradient } from "@/components/ui/bg-gradient";
 import { NuiccNavbar } from "@/components/ui/nuicc-navbar";
 import { NuiccFooter } from "@/components/ui/nuicc-footer";
 
-/* Tiers/prices/inclusions are the chamber's own (carried from nuicc.org). USD is
-   canonical; INR confirmed at signup. TODO(chamber): wire form to a real
-   processor / inbox. */
+/* Tiers, prices, and inclusions mirror the chamber's official membership matrix
+   (carried from nuicc.org). Benefits are cumulative — each tier includes every
+   lower tier's benefits. USD is canonical; INR confirmed at signup.
+   TODO(chamber): wire form to a real processor / inbox. */
 const TIERS = [
-  { name: "Individual / Nonprofit", price: "$400", perks: ["1-hour individual consultation", "International Trade Alert emails", "Daily Investor News emails"] },
-  { name: "Small Business", price: "$1,000", perks: ["2½ hours consultation", "Discounted bi-monthly event invitations", "Business promotion to 9,000+ members", "Discounted educational events & trade missions", "International Trade Alerts & Daily Investor News", "Preferred website placement"] },
-  { name: "Associate", price: "$5,000", perks: ["12½ hours consultation", "All Small Business benefits", "Premium website placement", "Banner ads on the NUICC website", "Recognition in NUICC communications"] },
-  { name: "Corporate", price: "$10,000", featured: true, perks: ["25 hours consultation", "All Associate benefits", "Speaking opportunities at NUICC events", "Business referral services"] },
-  { name: "Chairman's Circle", price: "$15,000", perks: ["37½ hours consultation", "All Corporate benefits", "Invitation to the NUICC Board of Advisors"] },
+  { name: "Individual / Nonprofit", price: "$400", perks: [
+    "1 hour of consultation on doing business in the Indian marketplace",
+    "International Trade Alert emails (current US/India trade information)",
+    "“Daily Investor News” emails",
+  ] },
+  { name: "Small Business", price: "$1,000", perks: [
+    "2½ hours of consultation on doing business in the Indian marketplace",
+    "Discounted invitations to bi-monthly India & U.S. opportunity events",
+    "Promote your business to NUICC’s 9,000 members worldwide",
+    "Discounted admission to NUICC educational events",
+    "Discounted arranged trade missions to India / the United States",
+    "International Trade Alert & “Daily Investor News” emails",
+  ] },
+  { name: "Associate", price: "$5,000", perks: [
+    "12½ hours of consultation on doing business in the Indian marketplace",
+    "All Small Business benefits",
+    "Preferred company status & product placement on the NUICC website",
+  ] },
+  { name: "Corporate", price: "$10,000", featured: true, perks: [
+    "25 hours of consultation on doing business in the Indian marketplace",
+    "All Associate benefits",
+    "Premium company status & product placement on the NUICC website",
+    "Banner ads promoting your business at nuicc.org",
+    "Recognition in NUICC Communications",
+  ] },
+  { name: "Chairman's Circle", price: "$15,000", perks: [
+    "37½ hours of consultation on doing business in the Indian marketplace",
+    "All Corporate benefits",
+    "Speaking opportunities at NUICC events & seminars in India and the U.S.",
+    "Business referral services — access to U.S. & Indian business leaders and government officials",
+    "Invitation for NUICC Board of Advisors membership",
+  ] },
 ];
 
 const ELIGIBLE = ["Companies", "Professionals", "Startups", "Investors", "Nonprofits", "Public Institutions"];

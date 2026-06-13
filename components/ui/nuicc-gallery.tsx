@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { SectionCard } from "@/components/ui/section-card";
-import { PreviewOverlay } from "@/components/ui/preview-overlay";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 /* Leader images with their chamber-approved captions, carried over verbatim from
    the existing site so every name stays correct and tied to its exact photo. */
@@ -67,14 +66,16 @@ function Row({ items, reverse }: { items: Leader[]; reverse?: boolean }) {
   );
 }
 
-/* Two-row marquee belt — used in the homepage preview overlay. */
-export function GalleryMarquee() {
+/* Two-row marquee belt. `fade` sets the edge-gradient colour so it blends with
+   either the page background (homepage) or a card (preview overlay). */
+export function GalleryMarquee({ fade = "card" }: { fade?: "card" | "background" }) {
+  const fadeL = fade === "background" ? "from-background" : "from-card";
   return (
     <div className="relative flex flex-col gap-4">
       <Row items={ROW_1} />
       <Row items={ROW_2} reverse />
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-card to-transparent md:w-20" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-card to-transparent md:w-20" />
+      <div className={`pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r ${fadeL} to-transparent md:w-20`} />
+      <div className={`pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l ${fadeL} to-transparent md:w-20`} />
     </div>
   );
 }
@@ -108,34 +109,35 @@ export function GalleryGrid() {
   );
 }
 
-/* ── Homepage dashboard entry ── */
+/* ── Homepage section: the live sliding marquee belt ── */
 
 export function NuiccGallery() {
-  const [open, setOpen] = useState(false);
   return (
-    <section id="gallery" className="section-pad mx-auto w-full max-w-6xl px-4">
-      <SectionCard
-        eyebrow="Gallery · Global Leaders"
-        title="Where influence meets opportunity."
-        summary="Heads of state, policymakers, and industry leaders shaping U.S.–India business — the company NUICC keeps, in pictures."
-        href="/gallery"
-        exploreLabel="View Gallery"
-        onExplore={() => setOpen(true)}
-      />
-
-      <PreviewOverlay
-        open={open}
-        onClose={() => setOpen(false)}
-        href="/gallery"
-        eyebrow="Gallery · Global Leaders"
-        title="Where influence meets opportunity"
-      >
-        <p className="mb-8 max-w-2xl text-muted-foreground">
-          NUICC connects members with the heads of state, policymakers, and industry leaders
-          shaping the future of U.S.–India business.
+    <section id="gallery" className="section-pad w-full overflow-hidden">
+      <div className="mx-auto mb-12 max-w-2xl px-4 text-center">
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+          Global Leaders
+        </span>
+        <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-5xl">
+          Where influence meets opportunity.
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+          NUICC connects members with the heads of state, policymakers, and industry
+          leaders shaping the future of U.S.–India business.
         </p>
-        <GalleryMarquee />
-      </PreviewOverlay>
+      </div>
+
+      <GalleryMarquee fade="background" />
+
+      <div className="mt-10 text-center">
+        <Link
+          href="/gallery"
+          className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37] px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#B8902A] transition-colors hover:bg-[#D4AF37] hover:text-[#0B132B]"
+        >
+          View Full Gallery
+          <ArrowUpRight className="h-4 w-4" />
+        </Link>
+      </div>
     </section>
   );
 }

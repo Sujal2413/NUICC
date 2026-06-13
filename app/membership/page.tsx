@@ -79,11 +79,7 @@ export default function MembershipPage() {
               </ul>
               <a
                 href="#join"
-                className={`mt-5 inline-flex h-11 w-full items-center justify-center whitespace-nowrap rounded-full px-3 text-[11px] font-semibold uppercase tracking-wide transition-colors ${
-                  t.featured
-                    ? "bg-[#D4AF37] text-[#0B132B] hover:bg-[#c39d2f]"
-                    : "border border-[#D4AF37] bg-primary text-primary-foreground hover:bg-[#D4AF37] hover:text-[#0B132B]"
-                }`}
+                className="mt-5 inline-flex h-11 w-full items-center justify-center whitespace-nowrap rounded-full bg-[#D4AF37] px-3 text-[11px] font-semibold uppercase tracking-wide text-[#0B132B] transition-colors hover:bg-[#c39d2f]"
               >
                 Select {t.name.split(" ")[0]}
               </a>

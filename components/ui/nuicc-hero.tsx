@@ -19,10 +19,12 @@ const CTA_FEEDBACK =
 
 export function NuiccHero() {
   return (
-    <section id="home" className="relative isolate w-full overflow-hidden bg-background">
-      {/* Banner is offset below the fixed navbar so its baked-in "Bridging
-          Horizons" title is never hidden behind the bar. Sharp, full quality. */}
-      <div className="absolute inset-x-0 bottom-0 top-[60px] z-0 md:top-[64px]">
+    <section id="home" className="relative isolate w-full overflow-hidden bg-white">
+      {/* Banner is offset clearly below the fixed navbar (which is ~71px tall) so
+          its baked-in "Bridging Horizons" title gets real breathing room and is
+          never tucked behind the bar. The white strip above matches the navbar.
+          Sharp, full quality. */}
+      <div className="absolute inset-x-0 bottom-0 top-[80px] z-0 md:top-[92px]">
         <Image
           src="/assets/img/home/bridging-horizons-banner.jpg"
           alt="Bridging Horizons — U.S.–India global innovation and collaboration"

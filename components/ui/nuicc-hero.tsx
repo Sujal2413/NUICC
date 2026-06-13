@@ -4,7 +4,6 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { Typewriter } from "@/components/ui/typewriter";
 
 /* Deterministic per-element fade-in-up: tagline → heading → subtext → buttons. */
 const rise = (delay: number) => ({
@@ -43,7 +42,7 @@ export function NuiccHero() {
           copy always clears the banner's baked-in "Bridging Horizons / Global
           Innovation" title with a consistent gap (the title's height scales with
           viewport width because the banner is object-cover by width). */}
-      <div className="relative z-10 mx-auto flex min-h-[92vh] w-full max-w-6xl flex-col justify-start px-4 pb-20 pt-64 md:min-h-[88vh] md:pt-[calc(10vw+13rem)]">
+      <div className="relative z-10 mx-auto flex min-h-[92vh] w-full max-w-6xl flex-col justify-start px-4 pb-20 pt-72 md:min-h-[88vh] md:pt-[calc(10vw+15rem)]">
         <div className="max-w-2xl">
           <motion.span
             {...rise(0.1)}
@@ -56,13 +55,7 @@ export function NuiccHero() {
             className="mt-6 text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
           >
             Your gateway to{" "}
-            <span className="text-[#D4AF37]">
-              <Typewriter
-                words={["Strategic Partnerships", "$1B+ Facilitated Trade", "Global Influence"]}
-                speed={70}
-                cursorClassName="text-[#D4AF37]"
-              />
-            </span>
+            <span className="text-[#D4AF37]">strategic partnerships for business deals</span>
           </motion.h1>
           <motion.p
             {...rise(0.34)}

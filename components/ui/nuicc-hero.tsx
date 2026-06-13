@@ -19,21 +19,24 @@ const CTA_FEEDBACK =
 
 export function NuiccHero() {
   return (
-    <section id="home" className="relative isolate w-full overflow-hidden">
-      {/* Full-bleed banner background — sharp, full quality, never blurred. */}
-      <Image
-        src="/assets/img/home/bridging-horizons-banner.jpg"
-        alt="Bridging Horizons — U.S.–India global innovation and collaboration"
-        fill
-        priority
-        unoptimized
-        sizes="100vw"
-        className="object-cover object-center"
-      />
-      {/* Left text scrim for legibility (keeps the right side bright) + a fade
-          into the white page below. No blur. */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#0B132B]/80 via-[#0B132B]/35 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 z-[1] h-1/3 bg-gradient-to-t from-[#fbf7ee] to-transparent" />
+    <section id="home" className="relative isolate w-full overflow-hidden bg-background">
+      {/* Banner is offset below the fixed navbar so its baked-in "Bridging
+          Horizons" title is never hidden behind the bar. Sharp, full quality. */}
+      <div className="absolute inset-x-0 bottom-0 top-[60px] z-0 md:top-[64px]">
+        <Image
+          src="/assets/img/home/bridging-horizons-banner.jpg"
+          alt="Bridging Horizons — U.S.–India global innovation and collaboration"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-top"
+        />
+        {/* Left text scrim for legibility (keeps the right side bright) + a fade
+            into the white page below. No blur. */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#0B132B]/80 via-[#0B132B]/35 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 z-[1] h-1/3 bg-gradient-to-t from-[#fbf7ee] to-transparent" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-[92vh] w-full max-w-6xl flex-col justify-center px-4 pb-20 pt-32 md:min-h-[88vh]">

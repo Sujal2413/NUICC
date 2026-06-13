@@ -23,8 +23,8 @@ export function NuiccNavbar() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        {/* Brand */}
-        <a href="#home" className="flex items-center gap-2.5">
+        {/* Brand — always routes to the main page */}
+        <a href="/" aria-label="National U.S.–India Chamber of Commerce — home" className="flex items-center gap-2.5">
           <Image
             src="/assets/img/home/nicuu-page.png"
             alt="National U.S.-India Chamber of Commerce Logo"

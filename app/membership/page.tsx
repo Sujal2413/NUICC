@@ -65,9 +65,9 @@ export default function MembershipPage() {
                 </span>
               )}
               <h2 className="min-h-[2.6rem] text-xl font-bold leading-tight text-card-foreground">{t.name}</h2>
-              <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-3xl font-extrabold text-[#B8902A]">{t.price}</span>
-                <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">membership</span>
+              <div className="mt-2">
+                <span className="block text-3xl font-extrabold leading-none text-[#B8902A]">{t.price}</span>
+                <span className="mt-1.5 block text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Membership</span>
               </div>
               <ul className="mt-5 flex-1 space-y-2.5">
                 {t.perks.map((p) => (
@@ -79,7 +79,7 @@ export default function MembershipPage() {
               </ul>
               <a
                 href="#join"
-                className={`mt-5 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors ${
+                className={`mt-5 inline-flex h-11 w-full items-center justify-center whitespace-nowrap rounded-full px-3 text-[11px] font-semibold uppercase tracking-wide transition-colors ${
                   t.featured
                     ? "bg-[#D4AF37] text-[#0B132B] hover:bg-[#c39d2f]"
                     : "border border-[#D4AF37] bg-primary text-primary-foreground hover:bg-[#D4AF37] hover:text-[#0B132B]"

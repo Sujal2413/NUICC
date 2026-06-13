@@ -27,3 +27,19 @@ npm run build
 ```
 
 No Vercel environment variables are required for the current static site.
+
+## Credits & Provenance
+
+This is original, custom-built work — not a purchased theme or template. The
+site reuses the chamber's own brand, photography, and content, which is why it
+resembles the existing nuicc.org.
+
+Custom interactive components (`components/motion/`, `DomeGallery`) are original
+implementations; several names are inspired by the open-source
+[React Bits](https://reactbits.dev) gallery, but no third-party effect code was
+copied. Dependencies are mainstream open-source packages (MIT/ISC/OFL); GSAP is
+used under its Standard "No Charge" licence.
+
+See [`PROVENANCE.md`](./PROVENANCE.md) for the full design-and-code provenance
+breakdown, including a component-by-component originality audit and a dependency
+licence table.

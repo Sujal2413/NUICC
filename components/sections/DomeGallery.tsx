@@ -26,7 +26,7 @@ function Card({ item }: { item: Item }) {
   return (
     <div className="gl-card">
       <div className="gl-card-inner">
-        <img src={item.img} alt={item.name} loading="lazy" />
+        <img src={item.img} alt={item.name} />
         <div className="gl-card-overlay">
           <span className="gl-card-name">{item.name}</span>
         </div>
@@ -42,6 +42,10 @@ function Card({ item }: { item: Item }) {
  * translate3d from 0 to -50% lands exactly on the duplicate and loops with
  * zero visual seam. Linear easing + GPU compositing = no stutter; no scroll
  * listener, no rAF loop, nothing tied to the page scroll position.
+ *
+ * Note: the component name nods to React Bits' "DomeGallery" concept, but this
+ * is an independent implementation — React Bits' version is a draggable 3D
+ * sphere and shares no code with this CSS marquee. See PROVENANCE.md.
  */
 function MarqueeRow({ items, direction, duration }: { items: Item[]; direction: "left" | "right"; duration: number }) {
   const doubled = [...items, ...items];
@@ -96,7 +100,7 @@ export default function DomeGallery() {
       {/* Infinite marquee — two opposing rows, GPU-composited */}
       <div className="gl-gallery">
         <MarqueeRow items={ROW_1} direction="left" duration={28} />
-        <MarqueeRow items={ROW_2} direction="right" duration={34} />
+        <MarqueeRow items={ROW_2} direction="left" duration={38} />
         <div className="gl-fade-left" />
         <div className="gl-fade-right" />
       </div>
@@ -123,7 +127,6 @@ export default function DomeGallery() {
         }
         .gl-marquee-track {
           display: flex;
-          gap: 16px;
           width: max-content;
           will-change: transform;
           transform: translate3d(0, 0, 0);
@@ -150,6 +153,7 @@ export default function DomeGallery() {
           flex-shrink: 0;
           width: 300px;
           height: 380px;
+          margin-right: 16px;
         }
         .gl-card-inner {
           position: relative;
@@ -276,12 +280,13 @@ export default function DomeGallery() {
           .gl-card {
             width: 200px;
             height: 260px;
+            margin-right: 10px;
           }
           .gl-gallery {
             gap: 18px;
           }
           .gl-marquee-track {
-            gap: 10px;
+            /* gap handled by card margin */
           }
           .gl-fade-left,
           .gl-fade-right {

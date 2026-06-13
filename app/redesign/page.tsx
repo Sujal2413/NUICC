@@ -7,7 +7,7 @@ import { NuiccLeaders } from "@/components/ui/nuicc-leaders";
 import { NuiccEndorsements } from "@/components/ui/nuicc-endorsements";
 import { NuiccFooter } from "@/components/ui/nuicc-footer";
 
-export default function HomePage() {
+export default function RedesignPage() {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <BackgroundGradient

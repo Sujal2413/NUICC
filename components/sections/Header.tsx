@@ -42,13 +42,22 @@ export default function Header() {
   // CSS limits the effect to <=768px; desktop never moves.
   useEffect(() => {
     let lastY = window.scrollY;
+    let travel = 0;
     const onScroll = () => {
       const y = window.scrollY;
-      const goingDown = y > lastY + 4;
-      const goingUp = y < lastY - 4;
-      if (goingDown && y > 160) setNavHidden(true);
-      else if (goingUp || y <= 160) setNavHidden(false);
-      if (goingDown || goingUp) lastY = y;
+      const delta = y - lastY;
+      lastY = y;
+      if (y <= 160) {
+        setNavHidden(false);
+        travel = 0;
+        return;
+      }
+      // Accumulate same-direction travel and only flip after 24px, so the
+      // jittery small-delta scroll events mobile browsers fire (URL bar
+      // collapse, rubber-banding) can't thrash the nav in and out.
+      travel = (delta >= 0) === (travel >= 0) ? travel + delta : delta;
+      if (travel > 24) setNavHidden(true);
+      else if (travel < -24) setNavHidden(false);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -180,7 +189,7 @@ export default function Header() {
         {/* CTA + Hamburger */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <a
-            href="https://nuicc.org/membership"
+            href="/membership"
             className="btn btn-light"
             id="nav-cta"
             style={{ fontSize: 12 }}
@@ -266,7 +275,7 @@ export default function Header() {
           ))}
         </nav>
         <a
-          href="https://nuicc.org/membership"
+          href="/membership"
           className="btn btn-light"
           onClick={closeMenu}
           style={{ marginTop: 40, fontSize: 14 }}

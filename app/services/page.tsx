@@ -61,7 +61,7 @@ function Column({
 export default function ServicesPage() {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
-      <BackgroundGradient gradientFrom="#142447" gradientTo="#0B132B" gradientStop="32%" className="bg-background" />
+      <BackgroundGradient gradientFrom="#fbf7ee" gradientTo="#e7eef5" gradientStop="35%" className="bg-background" />
       <NuiccNavbar />
 
       <section className="mx-auto w-full max-w-6xl px-4 pt-28 md:pt-36">

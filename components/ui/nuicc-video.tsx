@@ -73,7 +73,7 @@ function VideoCard({ video, index }: { video: Vid; index: number }) {
               alt={`${video.title} — NUICC`}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             />
             <span className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
             <motion.span

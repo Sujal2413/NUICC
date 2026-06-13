@@ -46,7 +46,11 @@ export function NuiccNavbar() {
             height={36}
             className="rounded-md bg-white object-contain p-0.5"
           />
-          <span className="hidden text-sm font-bold leading-tight tracking-tight text-foreground sm:block">
+          <span
+            className={`hidden text-sm font-bold leading-tight tracking-tight transition-colors sm:block ${
+              scrolled ? "text-foreground" : "text-white"
+            }`}
+          >
             National U.S.–India
             <br />
             Chamber of Commerce
@@ -63,7 +67,11 @@ export function NuiccNavbar() {
               key={item.name}
               href={item.href}
               onMouseEnter={() => setHovered(i)}
-              className="relative z-10 py-2 text-sm font-medium text-muted-foreground transition-colors duration-300 hover:text-foreground"
+              className={`relative z-10 py-2 text-sm font-medium transition-colors duration-300 ${
+                scrolled
+                  ? "text-muted-foreground hover:text-foreground"
+                  : "text-white/85 hover:text-white"
+              }`}
             >
               {item.name}
               {hovered === i && (
@@ -87,7 +95,11 @@ export function NuiccNavbar() {
           </Magnetic>
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                className={`md:hidden ${scrolled ? "" : "text-white hover:bg-white/10 hover:text-white"}`}
+              >
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Open menu</span>
               </Button>

@@ -40,28 +40,26 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* NUICC diplomatic palette — navy canvas, ivory cards, gold accent.
-     --foreground is ivory (text on the navy canvas); --card-foreground is navy
-     (text on ivory cards). --muted-foreground is a mid slate so it stays
-     legible on BOTH surfaces. */
-  --background: 222 59% 11%;        /* Deep Navy #0B132B */
-  --foreground: 44 44% 94%;         /* Warm Ivory #F7F4EA */
-  --card: 44 40% 94%;               /* Ivory card body */
-  --card-foreground: 222 47% 14%;   /* Navy ink on cards */
-  --popover: 44 40% 94%;
-  --popover-foreground: 222 47% 14%;
-  --primary: 222 52% 21%;           /* Rich navy (filled buttons) */
-  --primary-foreground: 44 44% 95%; /* Ivory text */
-  --secondary: 44 32% 90%;          /* Soft ivory (chips) */
-  --secondary-foreground: 222 47% 18%;
-  --sc-muted: 222 30% 18%;
-  --muted-foreground: 220 14% 56%;  /* mid slate — legible on navy & ivory */
+  /* NUICC light theme — warm ivory/white canvas, navy ink, gold accent.
+     White is the canvas; cards are white; gold (#D4AF37) is the accent. */
+  --background: 40 40% 98%;         /* Warm ivory white canvas */
+  --foreground: 215 45% 15%;        /* Navy ink */
+  --card: 0 0% 100%;                /* White cards */
+  --card-foreground: 215 45% 15%;   /* Navy ink on cards */
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 45% 15%;
+  --primary: 215 55% 20%;           /* Navy (filled buttons) */
+  --primary-foreground: 40 40% 97%;
+  --secondary: 40 30% 94%;
+  --secondary-foreground: 215 45% 18%;
+  --sc-muted: 40 24% 93%;
+  --muted-foreground: 215 16% 42%;  /* slate — legible on white */
   --accent: 46 65% 52%;             /* Burnished Gold #D4AF37 */
   --accent-foreground: 222 47% 12%;
-  --destructive: 0 65% 48%;
+  --destructive: 0 70% 45%;
   --destructive-foreground: 0 0% 100%;
-  --border: 40 18% 64%;
-  --input: 40 18% 64%;
+  --border: 40 20% 86%;
+  --input: 40 20% 86%;
   --ring: 46 65% 52%;               /* Gold focus ring */
 }
 

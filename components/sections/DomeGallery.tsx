@@ -42,6 +42,10 @@ function Card({ item }: { item: Item }) {
  * translate3d from 0 to -50% lands exactly on the duplicate and loops with
  * zero visual seam. Linear easing + GPU compositing = no stutter; no scroll
  * listener, no rAF loop, nothing tied to the page scroll position.
+ *
+ * Note: the component name nods to React Bits' "DomeGallery" concept, but this
+ * is an independent implementation — React Bits' version is a draggable 3D
+ * sphere and shares no code with this CSS marquee. See PROVENANCE.md.
  */
 function MarqueeRow({ items, direction, duration }: { items: Item[]; direction: "left" | "right"; duration: number }) {
   const doubled = [...items, ...items];

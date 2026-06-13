@@ -29,6 +29,86 @@
   --shadow: 0 36px 100px rgba(0, 0, 0, 0.34);
 }
 
+/* ═══════════════════════════════════════════
+   shadcn/ui theme layer (Tailwind v4) — powers the
+   redesigned page's components. Light-first NUICC palette
+   (ivory / navy / gold). Values are bare HSL triplets so
+   raw hsl(var(--primary)/.4) usages work too. The muted
+   SURFACE is aliased to --sc-muted to avoid clobbering the
+   legacy --muted (translucent ivory used by old sections).
+   ═══════════════════════════════════════════ */
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: 40 40% 98%;
+  --foreground: 215 45% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 45% 15%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 45% 15%;
+  --primary: 215 55% 20%;
+  --primary-foreground: 40 40% 97%;
+  --secondary: 40 30% 94%;
+  --secondary-foreground: 215 45% 18%;
+  --sc-muted: 40 24% 93%;
+  --muted-foreground: 215 16% 42%;
+  --accent: 40 45% 90%;
+  --accent-foreground: 215 45% 18%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 40 20% 86%;
+  --input: 40 20% 86%;
+  --ring: 215 55% 30%;
+}
+
+.dark {
+  --background: 215 60% 7%;
+  --foreground: 40 33% 94%;
+  --card: 215 50% 10%;
+  --card-foreground: 40 33% 94%;
+  --popover: 215 50% 10%;
+  --popover-foreground: 40 33% 94%;
+  --primary: 38 55% 55%;
+  --primary-foreground: 215 60% 8%;
+  --secondary: 215 40% 16%;
+  --secondary-foreground: 40 33% 94%;
+  --sc-muted: 215 30% 18%;
+  --muted-foreground: 40 15% 70%;
+  --accent: 215 40% 18%;
+  --accent-foreground: 40 33% 94%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 30% 20%;
+  --input: 215 30% 20%;
+  --ring: 38 55% 55%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--sc-muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
 /* ── Reset ───────────────────────────────── */
 *,
 *::before,
@@ -41,6 +121,7 @@ html {
   --font-body: var(--font-inter), sans-serif;
   --font-accent: var(--font-playfair), serif;
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -66,6 +147,33 @@ body::after {
   background:
     linear-gradient(rgba(7, 17, 29, 0.38), rgba(7, 17, 29, 0.65)),
     url("/assets/img/background/globe_bg.png") center center / cover no-repeat;
+}
+
+/* ── Redesign: unified vertical rhythm ───────
+   One spacing scale so every section breathes the same. */
+:root {
+  --section-spacing-desktop: 8rem;
+  --section-spacing-mobile: 4rem;
+}
+
+.section-pad {
+  padding-block: var(--section-spacing-mobile);
+}
+
+@media (min-width: 768px) {
+  .section-pad {
+    padding-block: var(--section-spacing-desktop);
+  }
+}
+
+/* Leader marquee belt — two opposing rows that loop seamlessly. */
+@keyframes nuicc-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes nuicc-marquee-rev {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
 }
 
 img,

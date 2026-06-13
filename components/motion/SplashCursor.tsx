@@ -2,6 +2,12 @@
 
 import { useEffect, useRef } from "react";
 
+/**
+ * Original 2D-canvas cursor: a glow that follows the pointer plus a small
+ * particle burst on click. The name nods to React Bits' "SplashCursor" concept,
+ * but this is an independent implementation — React Bits' version is a WebGL
+ * fluid simulation and shares no code with this. See PROVENANCE.md.
+ */
 export default function SplashCursor() {
   const glowRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);

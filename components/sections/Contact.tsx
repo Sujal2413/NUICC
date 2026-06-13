@@ -199,7 +199,7 @@ export default function Contact() {
               </p>
             </div>
             <a
-              href="https://nuicc.org/membership"
+              href="/membership"
               className="btn"
               style={{
                 background: "linear-gradient(135deg, var(--saffron) 0%, var(--gold) 100%)",

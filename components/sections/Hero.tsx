@@ -292,7 +292,7 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className={`hero-actions hero-anim hero-anim--7 ${loaded ? "hero-anim--in" : ""}`}>
-              <a href="https://nuicc.org/membership" className="hero-btn hero-btn--primary">
+              <a href="/membership" className="hero-btn hero-btn--primary">
                 <span className="hero-btn-text">BECOME A MEMBER</span>
                 <span className="hero-btn-arrow">→</span>
               </a>

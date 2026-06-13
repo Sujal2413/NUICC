@@ -189,7 +189,7 @@ export default function Header() {
         {/* CTA + Hamburger */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <a
-            href="https://nuicc.org/membership"
+            href="/membership"
             className="btn btn-light"
             id="nav-cta"
             style={{ fontSize: 12 }}
@@ -275,7 +275,7 @@ export default function Header() {
           ))}
         </nav>
         <a
-          href="https://nuicc.org/membership"
+          href="/membership"
           className="btn btn-light"
           onClick={closeMenu}
           style={{ marginTop: 40, fontSize: 14 }}

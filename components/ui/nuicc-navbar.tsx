@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { Menu } from "lucide-react";
 import { motion } from "motion/react";
@@ -17,25 +17,11 @@ const NAV = [
 ];
 
 export function NuiccNavbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
 
-  // Transparent at the top; blurred panel + border after 50px.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
+  // Always a bright, blurred white bar (never transparent over the hero).
   return (
-    <nav
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-border/60 bg-background/70 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         {/* Brand */}
         <a href="#home" className="flex items-center gap-2.5">
@@ -46,11 +32,7 @@ export function NuiccNavbar() {
             height={36}
             className="rounded-md bg-white object-contain p-0.5"
           />
-          <span
-            className={`hidden text-sm font-bold leading-tight tracking-tight transition-colors sm:block ${
-              scrolled ? "text-foreground" : "text-white"
-            }`}
-          >
+          <span className="hidden text-sm font-bold leading-tight tracking-tight text-foreground sm:block">
             National U.S.–India
             <br />
             Chamber of Commerce
@@ -67,11 +49,7 @@ export function NuiccNavbar() {
               key={item.name}
               href={item.href}
               onMouseEnter={() => setHovered(i)}
-              className={`relative z-10 py-2 text-sm font-medium transition-colors duration-300 ${
-                scrolled
-                  ? "text-muted-foreground hover:text-foreground"
-                  : "font-semibold text-white hover:text-[#E8D9A8]"
-              }`}
+              className="relative z-10 py-2 text-sm font-semibold text-foreground/80 transition-colors duration-300 hover:text-foreground"
             >
               {item.name}
               {hovered === i && (
@@ -95,11 +73,7 @@ export function NuiccNavbar() {
           </Magnetic>
           <Sheet>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={`md:hidden ${scrolled ? "" : "text-white hover:bg-white/10 hover:text-white"}`}
-              >
+              <Button variant="ghost" size="icon" className="md:hidden text-foreground">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Open menu</span>
               </Button>

@@ -10,10 +10,10 @@ import { Magnetic } from "@/components/ui/magnetic";
 
 const NAV = [
   { name: "About", href: "#about" },
-  { name: "Leaders", href: "#leaders" },
   { name: "Services", href: "#services" },
+  { name: "Gallery", href: "#gallery" },
+  { name: "Media", href: "#media" },
   { name: "Membership", href: "/membership" },
-  { name: "Contact", href: "#contact" },
 ];
 
 export function NuiccNavbar() {

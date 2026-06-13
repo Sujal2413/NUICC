@@ -45,18 +45,20 @@ export function NuiccEndorsements() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.45, delay: (i % 3) * 0.07 }}
-              className="group flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/[0.06] p-5 transition-colors hover:bg-primary-foreground/[0.12]"
+              className="group flex flex-col gap-4 rounded-2xl border border-[#D4AF37]/25 bg-white/[0.06] p-6 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-[#D4AF37]/60 hover:bg-white/[0.1] hover:shadow-xl"
             >
-              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-primary-foreground/25 text-primary-foreground/90">
-                <FileText className="h-5 w-5" />
+              <div className="flex items-start gap-4">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/45 text-[#E8D9A8]">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold leading-tight">{l.name}</p>
+                  <p className="mt-1 text-xs uppercase tracking-wide text-primary-foreground/55">{l.role}</p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="font-bold leading-tight">{l.name}</p>
-                <p className="mt-1 text-xs uppercase tracking-wide text-primary-foreground/55">{l.role}</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-primary-foreground/85">
-                  View Letter <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </div>
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#D4AF37]/50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-[#E8D9A8] transition-colors group-hover:bg-[#D4AF37] group-hover:text-[#0B132B]">
+                View Letter <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
             </motion.a>
           ))}
         </div>

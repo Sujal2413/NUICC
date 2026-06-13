@@ -70,7 +70,7 @@ export function NuiccNavbar() {
               className={`relative z-10 py-2 text-sm font-medium transition-colors duration-300 ${
                 scrolled
                   ? "text-muted-foreground hover:text-foreground"
-                  : "text-white/85 hover:text-white"
+                  : "font-semibold text-white hover:text-[#E8D9A8]"
               }`}
             >
               {item.name}
@@ -89,7 +89,7 @@ export function NuiccNavbar() {
         {/* CTA + mobile menu */}
         <div className="flex items-center gap-2">
           <Magnetic strength={0.4} className="hidden md:block">
-            <Button asChild className="rounded-full">
+            <Button asChild className="rounded-full bg-[#D4AF37] font-bold text-[#0B132B] hover:bg-[#e3c252]">
               <a href="/membership">Become a Member</a>
             </Button>
           </Magnetic>
@@ -115,7 +115,7 @@ export function NuiccNavbar() {
                     {n.name}
                   </a>
                 ))}
-                <Button asChild className="mt-2 rounded-full">
+                <Button asChild className="mt-2 rounded-full bg-[#D4AF37] font-bold text-[#0B132B] hover:bg-[#e3c252]">
                   <a href="/membership">Become a Member</a>
                 </Button>
               </nav>

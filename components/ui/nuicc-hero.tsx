@@ -69,7 +69,7 @@ export function NuiccHero() {
               <Button
                 asChild
                 size="lg"
-                className={`w-full rounded-full border border-[#D4AF37] bg-primary text-primary-foreground hover:bg-[#D4AF37] hover:text-[#0B132B] sm:w-auto ${CTA_FEEDBACK}`}
+                className={`w-full rounded-full bg-[#D4AF37] font-bold text-[#0B132B] shadow-lg hover:bg-[#e3c252] sm:w-auto ${CTA_FEEDBACK}`}
               >
                 <a href="/membership">
                   Request Membership <ArrowRight className="ml-1.5 h-4 w-4" />
@@ -80,7 +80,7 @@ export function NuiccHero() {
               asChild
               size="lg"
               variant="outline"
-              className={`rounded-full border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white ${CTA_FEEDBACK}`}
+              className={`rounded-full border-2 border-white bg-white/10 font-semibold text-white backdrop-blur-sm hover:bg-white/20 hover:text-white ${CTA_FEEDBACK}`}
             >
               <a href="#services">Explore Services</a>
             </Button>

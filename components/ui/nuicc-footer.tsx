@@ -20,7 +20,7 @@ const CONTACT = [
 export function NuiccFooter() {
   return (
     <footer id="contact" className="relative overflow-hidden border-t border-border bg-card">
-      <div className="mx-auto w-full max-w-6xl px-4 pt-16 pb-8">
+      <div className="mx-auto w-full max-w-6xl px-4 pt-20 pb-12">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1.2fr]">
           <div>
             <div className="flex items-center gap-3">
@@ -90,7 +90,7 @@ export function NuiccFooter() {
       {/* Oversized wordmark wash */}
       <div
         aria-hidden="true"
-        className="pointer-events-none select-none px-4 pb-2 text-center text-[18vw] font-extrabold leading-none tracking-tighter text-primary/[0.05]"
+        className="pointer-events-none select-none px-4 pb-3 text-center text-[18vw] font-extrabold leading-none tracking-tighter text-primary/[0.09]"
       >
         NUICC
       </div>

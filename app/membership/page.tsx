@@ -11,12 +11,12 @@ import { NuiccFooter } from "@/components/ui/nuicc-footer";
    lower tier's benefits. USD is canonical; INR confirmed at signup.
    TODO(chamber): wire form to a real processor / inbox. */
 const TIERS = [
-  { name: "Individual / Nonprofit", price: "$400", perks: [
+  { name: "Individual / Nonprofit", price: "$400", inr: "₹36,108", perks: [
     "1 hour of consultation on doing business in the Indian marketplace",
     "International Trade Alert emails (current US/India trade information)",
     "“Daily Investor News” emails",
   ] },
-  { name: "Small Business", price: "$1,000", perks: [
+  { name: "Small Business", price: "$1,000", inr: "₹90,270", perks: [
     "2½ hours of consultation on doing business in the Indian marketplace",
     "Discounted invitations to bi-monthly India & U.S. opportunity events",
     "Promote your business to NUICC’s 9,000 members worldwide",
@@ -24,19 +24,19 @@ const TIERS = [
     "Discounted arranged trade missions to India / the United States",
     "International Trade Alert & “Daily Investor News” emails",
   ] },
-  { name: "Associate", price: "$5,000", perks: [
+  { name: "Associate", price: "$5,000", inr: "₹4,51,350", perks: [
     "12½ hours of consultation on doing business in the Indian marketplace",
     "All Small Business benefits",
     "Preferred company status & product placement on the NUICC website",
   ] },
-  { name: "Corporate", price: "$10,000", featured: true, perks: [
+  { name: "Corporate", price: "$10,000", inr: "₹9,02,700", featured: true, perks: [
     "25 hours of consultation on doing business in the Indian marketplace",
     "All Associate benefits",
     "Premium company status & product placement on the NUICC website",
     "Banner ads promoting your business at nuicc.org",
     "Recognition in NUICC Communications",
   ] },
-  { name: "Chairman's Circle", price: "$15,000", perks: [
+  { name: "Chairman's Circle", price: "$15,000", inr: "₹13,54,050", perks: [
     "37½ hours of consultation on doing business in the Indian marketplace",
     "All Corporate benefits",
     "Speaking opportunities at NUICC events & seminars in India and the U.S.",
@@ -95,6 +95,7 @@ export default function MembershipPage() {
               <h2 className="min-h-[2.6rem] text-xl font-bold leading-tight text-card-foreground">{t.name}</h2>
               <div className="mt-2">
                 <span className="block text-3xl font-extrabold leading-none text-[#B8902A]">{t.price}</span>
+                <span className="mt-1 block text-xs font-medium text-muted-foreground">≈ {t.inr}</span>
                 <span className="mt-1.5 block text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Membership</span>
               </div>
               <ul className="mt-5 flex-1 space-y-2.5">
@@ -115,7 +116,7 @@ export default function MembershipPage() {
           ))}
         </div>
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Contributions shown in U.S. dollars. Billing terms and current INR equivalents are confirmed at signup.
+          Contributions shown in U.S. dollars; INR equivalents are approximate. Billing terms and the exact INR amount are confirmed at signup.
         </p>
       </section>
 

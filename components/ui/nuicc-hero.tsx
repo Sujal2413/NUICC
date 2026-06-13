@@ -4,7 +4,6 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/ui/magnetic";
 import { Typewriter } from "@/components/ui/typewriter";
 
 /* Deterministic per-element fade-in-up: tagline → heading → subtext → buttons. */
@@ -14,8 +13,8 @@ const rise = (delay: number) => ({
   transition: { duration: 0.6, ease: "easeOut" as const, delay },
 });
 
-const CTA_FEEDBACK =
-  "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.98]";
+/* Static buttons — colour transition only, no position/scale movement. */
+const CTA_FEEDBACK = "transition-colors duration-200";
 
 export function NuiccHero() {
   return (
@@ -44,7 +43,7 @@ export function NuiccHero() {
           copy always clears the banner's baked-in "Bridging Horizons / Global
           Innovation" title with a consistent gap (the title's height scales with
           viewport width because the banner is object-cover by width). */}
-      <div className="relative z-10 mx-auto flex min-h-[92vh] w-full max-w-6xl flex-col justify-start px-4 pb-20 pt-56 md:min-h-[88vh] md:pt-[calc(10vw+10rem)]">
+      <div className="relative z-10 mx-auto flex min-h-[92vh] w-full max-w-6xl flex-col justify-start px-4 pb-20 pt-64 md:min-h-[88vh] md:pt-[calc(10vw+13rem)]">
         <div className="max-w-2xl">
           <motion.span
             {...rise(0.1)}
@@ -73,17 +72,15 @@ export function NuiccHero() {
             and India through matchmaking, trade missions, and high-level advisory.
           </motion.p>
           <motion.div {...rise(0.46)} className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Magnetic strength={0.35}>
-              <Button
-                asChild
-                size="lg"
-                className={`w-full rounded-full bg-[#D4AF37] font-bold text-[#0B132B] shadow-lg hover:bg-[#e3c252] sm:w-auto ${CTA_FEEDBACK}`}
-              >
-                <a href="/membership">
-                  Request Membership <ArrowRight className="ml-1.5 h-4 w-4" />
-                </a>
-              </Button>
-            </Magnetic>
+            <Button
+              asChild
+              size="lg"
+              className={`w-full rounded-full bg-[#D4AF37] font-bold text-[#0B132B] shadow-lg hover:bg-[#e3c252] sm:w-auto ${CTA_FEEDBACK}`}
+            >
+              <a href="/membership">
+                Request Membership <ArrowRight className="ml-1.5 h-4 w-4" />
+              </a>
+            </Button>
             <Button
               asChild
               size="lg"

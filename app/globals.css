@@ -154,8 +154,8 @@ body::after {
 /* ── Redesign: unified vertical rhythm ───────
    One spacing scale so every section breathes the same. */
 :root {
-  --section-spacing-desktop: 4rem;
-  --section-spacing-mobile: 2.25rem;
+  --section-spacing-desktop: 2.25rem;
+  --section-spacing-mobile: 1.5rem;
 }
 
 .section-pad {

@@ -40,7 +40,7 @@ function Card({ leader }: { leader: Leader }) {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent" />
       </div>
       <figcaption className="px-4 py-3">
-        <p className="truncate text-sm font-bold text-foreground">{leader.name}</p>
+        <p className="truncate text-sm font-bold text-card-foreground">{leader.name}</p>
         {leader.note && <p className="mt-0.5 truncate text-xs text-muted-foreground">{leader.note}</p>}
       </figcaption>
     </figure>
@@ -70,7 +70,7 @@ export function NuiccLeaders() {
   return (
     <section id="leaders" className="section-pad w-full overflow-hidden">
       <div className="mx-auto mb-12 max-w-2xl px-4 text-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/70">
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Global Leaders
         </span>
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-5xl">

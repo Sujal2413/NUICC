@@ -12,6 +12,7 @@ import {
 } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/ui/magnetic";
+import { Typewriter } from "@/components/ui/typewriter";
 
 /* Deterministic per-element fade-in-up so the hero reveals in sequence:
    tagline → heading → subtext → buttons. */
@@ -59,9 +60,16 @@ export function NuiccHero() {
           </motion.span>
           <motion.h1
             {...rise(0.22)}
-            className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+            className="mt-6 text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl"
           >
-            Your gateway to <span className="text-primary">strategic trade.</span>
+            Your gateway to{" "}
+            <span className="text-accent">
+              <Typewriter
+                words={["Strategic Partnerships", "$1B+ Facilitated Trade", "Global Influence"]}
+                speed={70}
+                cursorClassName="text-[#D4AF37]"
+              />
+            </span>
           </motion.h1>
           <motion.p
             {...rise(0.34)}
@@ -108,12 +116,13 @@ export function NuiccHero() {
             className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border shadow-2xl"
           >
             <Image
-              src="/assets/img/home/nuicc_image.jpg"
-              alt="Dr. Purnima Voria, NUICC Founder and CEO, with Prime Minister Narendra Modi"
+              src="/assets/img/home/bridging-horizons.jpg"
+              alt="Bridging Horizons — U.S.–India global innovation and collaboration"
               fill
               priority
+              quality={95}
               sizes="(max-width: 768px) 100vw, 45vw"
-              className="object-cover"
+              className="object-cover object-[center_42%]"
             />
           </motion.div>
 
@@ -122,8 +131,8 @@ export function NuiccHero() {
             style={{ y: badgeY }}
             className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/20 bg-black/30 p-4 backdrop-blur-md"
           >
-            <p className="text-sm font-semibold text-white">Dr. Purnima Voria, Founder &amp; CEO</p>
-            <p className="text-xs text-white/80">with H.E. Prime Minister Narendra Modi</p>
+            <p className="text-sm font-semibold text-white">Bridging Horizons</p>
+            <p className="text-xs text-white/80">Two decades connecting U.S. &amp; India enterprise</p>
           </motion.div>
         </motion.div>
       </section>

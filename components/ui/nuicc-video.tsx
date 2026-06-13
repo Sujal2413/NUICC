@@ -86,7 +86,7 @@ function VideoCard({ video, index }: { video: Vid; index: number }) {
         )}
       </div>
       <div className="p-5">
-        <h3 className="text-lg font-bold text-foreground">{video.title}</h3>
+        <h3 className="text-lg font-bold text-card-foreground">{video.title}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{video.blurb}</p>
       </div>
     </motion.div>
@@ -97,7 +97,7 @@ export function NuiccVideo() {
   return (
     <section className="section-pad mx-auto w-full max-w-6xl px-4">
       <div className="mx-auto mb-14 max-w-2xl text-center md:mb-16">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/70">
+        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Watch
         </span>
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-5xl">

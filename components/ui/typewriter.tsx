@@ -7,6 +7,7 @@ interface TypewriterProps {
   delayBetweenWords?: number
   cursor?: boolean
   cursorChar?: string
+  cursorClassName?: string
 }
 
 export function Typewriter({
@@ -15,6 +16,7 @@ export function Typewriter({
   delayBetweenWords = 2000,
   cursor = true,
   cursorChar = "|",
+  cursorClassName = "",
 }: TypewriterProps) {
   const [displayText, setDisplayText] = useState("")
   const [isDeleting, setIsDeleting] = useState(false)
@@ -64,7 +66,10 @@ export function Typewriter({
     <span className="inline-block">
       {displayText}
       {cursor && (
-        <span className="ml-1 transition-opacity duration-75" style={{ opacity: showCursor ? 1 : 0 }}>
+        <span
+          className={`ml-1 transition-opacity duration-75 ${cursorClassName}`}
+          style={{ opacity: showCursor ? 1 : 0 }}
+        >
           {cursorChar}
         </span>
       )}

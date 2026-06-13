@@ -31,7 +31,7 @@ export function NuiccFooter() {
                 height={44}
                 className="rounded-md bg-white object-contain p-0.5"
               />
-              <span className="text-base font-bold leading-tight text-foreground">
+              <span className="text-base font-bold leading-tight text-card-foreground">
                 National U.S.–India
                 <br />
                 Chamber of Commerce
@@ -44,7 +44,7 @@ export function NuiccFooter() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wide text-foreground">Explore</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wide text-card-foreground">Explore</h4>
             <ul className="mt-4 space-y-2.5">
               {NAV.map((n) => (
                 <li key={n.label}>
@@ -57,7 +57,7 @@ export function NuiccFooter() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wide text-foreground">Contact</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wide text-card-foreground">Contact</h4>
             <ul className="mt-4 space-y-3">
               {CONTACT.map((c, i) => {
                 const Icon = c.icon;

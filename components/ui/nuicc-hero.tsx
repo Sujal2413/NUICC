@@ -40,8 +40,11 @@ export function NuiccHero() {
         <div className="absolute inset-x-0 bottom-0 z-[1] h-1/3 bg-gradient-to-t from-[#fbf7ee] to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto flex min-h-[92vh] w-full max-w-6xl flex-col justify-center px-4 pb-20 pt-32 md:min-h-[88vh]">
+      {/* Content. Anchored from the top with a width-proportional offset so the
+          copy always clears the banner's baked-in "Bridging Horizons / Global
+          Innovation" title with a consistent gap (the title's height scales with
+          viewport width because the banner is object-cover by width). */}
+      <div className="relative z-10 mx-auto flex min-h-[92vh] w-full max-w-6xl flex-col justify-start px-4 pb-20 pt-56 md:min-h-[88vh] md:pt-[calc(10vw+10rem)]">
         <div className="max-w-2xl">
           <motion.span
             {...rise(0.1)}

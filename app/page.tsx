@@ -2,12 +2,12 @@ import { Component as BackgroundGradient } from "@/components/ui/bg-gradient";
 import { NuiccNavbar } from "@/components/ui/nuicc-navbar";
 import { NuiccHero } from "@/components/ui/nuicc-hero";
 import { NuiccVideo } from "@/components/ui/nuicc-video";
+import { NuiccAbout } from "@/components/ui/nuicc-about";
 import { NuiccServices } from "@/components/ui/nuicc-services";
 import { NuiccIndustries } from "@/components/ui/nuicc-industries";
-import { NuiccLeaders } from "@/components/ui/nuicc-leaders";
-import { NuiccCommittee } from "@/components/ui/nuicc-committee";
+import { NuiccGallery } from "@/components/ui/nuicc-gallery";
 import { NuiccEndorsements } from "@/components/ui/nuicc-endorsements";
-import { NuiccPress } from "@/components/ui/nuicc-press";
+import { NuiccMedia } from "@/components/ui/nuicc-media";
 import { NuiccMembershipCta } from "@/components/ui/nuicc-membership-cta";
 import { NuiccFooter } from "@/components/ui/nuicc-footer";
 
@@ -23,12 +23,12 @@ export default function HomePage() {
       <NuiccNavbar />
       <NuiccHero />
       <NuiccVideo />
+      <NuiccAbout />
       <NuiccServices />
       <NuiccIndustries />
-      <NuiccLeaders />
-      <NuiccCommittee />
+      <NuiccGallery />
       <NuiccEndorsements />
-      <NuiccPress />
+      <NuiccMedia />
       <NuiccMembershipCta />
       <NuiccFooter />
     </main>

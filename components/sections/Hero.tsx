@@ -371,8 +371,8 @@ export default function Hero() {
           min-height: 100svh;
           display: flex;
           flex-direction: column;
-          justify-content: flex-end;
-          padding: 130px 0 40px;
+          justify-content: center;
+          padding: 100px 0 60px;
           overflow: hidden;
           isolation: isolate;
         }

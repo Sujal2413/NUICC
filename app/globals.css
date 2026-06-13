@@ -47,13 +47,25 @@ body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--ivory);
-  background: 
-    linear-gradient(rgba(7, 17, 29, 0.38), rgba(7, 17, 29, 0.65)),
-    url("/assets/img/background/globe_bg.png") no-repeat center center fixed;
-  background-size: cover;
+  background: var(--night);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page backdrop lives on a fixed-position layer instead of
+   background-attachment: fixed — the latter repaints the body background on
+   every scrolled frame on mobile (and is broken with cover on iOS Safari),
+   which makes the whole site judder while scrolling. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(7, 17, 29, 0.38), rgba(7, 17, 29, 0.65)),
+    url("/assets/img/background/globe_bg.png") center center / cover no-repeat;
 }
 
 img,

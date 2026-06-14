@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { Component as BackgroundGradient } from "@/components/ui/bg-gradient";
 import { NuiccNavbar } from "@/components/ui/nuicc-navbar";
 import { NuiccFooter } from "@/components/ui/nuicc-footer";
@@ -162,15 +162,22 @@ export default function MembershipPage() {
                 ))}
                 <label className="grid gap-1.5 text-xs font-bold uppercase tracking-wide text-card-foreground">
                   Membership Tier
-                  <select
-                    value={form.tier}
-                    onChange={(e) => setForm({ ...form, tier: e.target.value })}
-                    className="rounded-md border border-border bg-white px-3.5 py-3 text-sm font-normal normal-case tracking-normal text-foreground outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30"
-                  >
-                    {TIERS.map((t) => (
-                      <option key={t.name} value={t.name}>{t.name} — {t.price}</option>
-                    ))}
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={form.tier}
+                      onChange={(e) => setForm({ ...form, tier: e.target.value })}
+                      className="w-full cursor-pointer appearance-none rounded-md border border-border bg-white py-3 pl-3.5 pr-11 text-sm font-medium normal-case tracking-normal text-foreground outline-none transition-colors hover:border-[#D4AF37]/70 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30"
+                    >
+                      {TIERS.map((t) => (
+                        <option key={t.name} value={t.name}>{t.name} — {t.price}</option>
+                      ))}
+                    </select>
+                    <span className="pointer-events-none absolute inset-y-0 right-2.5 flex items-center">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#D4AF37]/15 text-[#B8902A]">
+                        <ChevronDown className="h-4 w-4" />
+                      </span>
+                    </span>
+                  </div>
                 </label>
                 <button
                   type="submit"

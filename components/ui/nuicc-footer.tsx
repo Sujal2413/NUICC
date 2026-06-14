@@ -38,13 +38,13 @@ function XIcon({ className }: { className?: string }) {
 
 export function NuiccFooter() {
   return (
-    <footer id="contact" className="relative overflow-hidden bg-[#0B132B] text-white/80">
+    <footer id="contact" className="relative overflow-hidden border-t border-border bg-card text-muted-foreground">
       {/* Top CTA bar */}
-      <div className="border-b border-white/10">
+      <div className="border-b border-border">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-5 px-4 py-8 text-center md:flex-row md:text-left">
           <div>
-            <h3 className="text-xl font-bold text-white md:text-2xl">Ready to take your business global?</h3>
-            <p className="mt-1 text-sm text-white/70">Connect with 9,200+ members across industries.</p>
+            <h3 className="text-xl font-bold text-foreground md:text-2xl">Ready to take your business global?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">Connect with 9,200+ members across industries.</p>
           </div>
           <Link
             href="/membership"
@@ -68,13 +68,13 @@ export function NuiccFooter() {
                 height={48}
                 className="rounded-md bg-white object-contain p-0.5"
               />
-              <span className="text-base font-bold leading-tight text-white">
+              <span className="text-base font-bold leading-tight text-foreground">
                 National U.S.–India
                 <br />
                 Chamber of Commerce
               </span>
             </div>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               NUICC is a 501(c)(6) organization whose mission is to promote bilateral trade
               between the United States and India, cultivating business relationships that
               will result in business deals.
@@ -98,11 +98,11 @@ export function NuiccFooter() {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wide text-white">Navigation</h4>
+            <h4 className="text-sm font-bold uppercase tracking-wide text-foreground">Navigation</h4>
             <ul className="mt-4 space-y-2.5">
               {NAVIGATION.map((n) => (
                 <li key={n.label}>
-                  <Link href={n.href} className="text-sm text-white/70 transition-colors hover:text-[#D4AF37]">
+                  <Link href={n.href} className="text-sm text-muted-foreground transition-colors hover:text-[#B8902A]">
                     {n.label}
                   </Link>
                 </li>
@@ -112,11 +112,11 @@ export function NuiccFooter() {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wide text-white">Services</h4>
+            <h4 className="text-sm font-bold uppercase tracking-wide text-foreground">Services</h4>
             <ul className="mt-4 space-y-2.5">
               {SERVICES.map((s) => (
                 <li key={s.label}>
-                  <Link href={s.href} className="text-sm text-white/70 transition-colors hover:text-[#D4AF37]">
+                  <Link href={s.href} className="text-sm text-muted-foreground transition-colors hover:text-[#B8902A]">
                     {s.label}
                   </Link>
                 </li>
@@ -126,21 +126,21 @@ export function NuiccFooter() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wide text-white">Contact Us</h4>
+            <h4 className="text-sm font-bold uppercase tracking-wide text-foreground">Contact Us</h4>
             <ul className="mt-4 space-y-3.5">
-              <li className="flex items-start gap-3 text-sm text-white/70">
-                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#D4AF37]" />
+              <li className="flex items-start gap-3 text-sm text-muted-foreground">
+                <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#B8902A]" />
                 <span>1099 17th St, Suite 2150,<br />Denver, CO 80202,<br />United States</span>
               </li>
               <li>
-                <a href="tel:+17203233728" className="flex items-start gap-3 text-sm text-white/70 transition-colors hover:text-[#D4AF37]">
-                  <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#D4AF37]" />
+                <a href="tel:+17203233728" className="flex items-start gap-3 text-sm text-muted-foreground transition-colors hover:text-[#B8902A]">
+                  <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#B8902A]" />
                   <span>+1 (720) 323-3728</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:info@nuicc.org" className="flex items-start gap-3 text-sm text-white/70 transition-colors hover:text-[#D4AF37]">
-                  <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#D4AF37]" />
+                <a href="mailto:info@nuicc.org" className="flex items-start gap-3 text-sm text-muted-foreground transition-colors hover:text-[#B8902A]">
+                  <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#B8902A]" />
                   <span>info@nuicc.org</span>
                 </a>
               </li>
@@ -149,8 +149,8 @@ export function NuiccFooter() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 flex items-center justify-between gap-3 border-t border-white/10 pt-6">
-          <span className="text-xs text-white/55">© {new Date().getFullYear()} NUICC. All rights reserved.</span>
+        <div className="mt-10 flex items-center justify-between gap-3 border-t border-border pt-6">
+          <span className="text-xs text-muted-foreground">© {new Date().getFullYear()} NUICC. All rights reserved.</span>
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

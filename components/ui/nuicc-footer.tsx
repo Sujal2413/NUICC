@@ -20,12 +20,14 @@ const SERVICES = [
   { label: "Business Opportunities", href: "/services" },
 ];
 
-/* Official chamber handles, carried verbatim from the existing site. */
+/* Official chamber handles, carried verbatim from the existing site. Light
+   theme: soft brand-tinted circle + brand-coloured glyph (colours applied
+   inline so they always render regardless of utility-class generation). */
 const SOCIAL = [
-  { label: "Facebook", href: "https://www.facebook.com/www.nuicc.info/", Icon: Facebook, bg: "#1877F2" },
-  { label: "Instagram", href: "https://www.instagram.com/reel/DPE_Z7SE5pR/", Icon: Instagram, bg: "linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)" },
-  { label: "X", href: "https://x.com/NUICC", Icon: XIcon, bg: "#000000" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/purnimavoria/", Icon: Linkedin, bg: "#0A66C2" },
+  { label: "Facebook", href: "https://www.facebook.com/www.nuicc.info/", Icon: Facebook, color: "#1877F2" },
+  { label: "Instagram", href: "https://www.instagram.com/reel/DPE_Z7SE5pR/", Icon: Instagram, color: "#C13584" },
+  { label: "X", href: "https://x.com/NUICC", Icon: XIcon, color: "#0B132B" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/purnimavoria/", Icon: Linkedin, color: "#0A66C2" },
 ];
 
 function XIcon({ className }: { className?: string }) {
@@ -80,17 +82,17 @@ export function NuiccFooter() {
               will result in business deals.
             </p>
             <div className="mt-5 flex items-center gap-3">
-              {SOCIAL.map(({ label, href, Icon, bg }) => (
+              {SOCIAL.map(({ label, href, Icon, color }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  style={{ background: bg }}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white shadow-sm transition-transform hover:scale-110"
+                  style={{ backgroundColor: `${color}14`, color }}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-[18px] w-[18px]" />
                 </a>
               ))}
             </div>

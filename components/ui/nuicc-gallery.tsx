@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
 /* Leader images with their chamber-approved captions, carried over verbatim from
@@ -114,7 +115,13 @@ export function GalleryGrid() {
 export function NuiccGallery() {
   return (
     <section id="gallery" className="section-pad w-full overflow-hidden">
-      <div className="mx-auto mb-12 max-w-2xl px-4 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5 }}
+        className="mx-auto mb-12 max-w-2xl px-4 text-center"
+      >
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Global Leaders
         </span>
@@ -125,7 +132,7 @@ export function NuiccGallery() {
           NUICC connects members with the heads of state, policymakers, and industry
           leaders shaping the future of U.S.–India business.
         </p>
-      </div>
+      </motion.div>
 
       <GalleryMarquee fade="background" />
 

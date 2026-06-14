@@ -17,12 +17,11 @@ const CTA_FEEDBACK = "transition-colors duration-200";
 
 export function NuiccHero() {
   return (
-    <section id="home" className="relative isolate w-full overflow-hidden bg-white">
-      {/* Banner is offset clearly below the fixed navbar (which is ~71px tall) so
-          its baked-in "Bridging Horizons" title gets real breathing room and is
-          never tucked behind the bar. The white strip above matches the navbar.
-          Sharp, full quality. */}
-      <div className="absolute inset-x-0 bottom-0 top-[80px] z-0 md:top-[92px]">
+    <section id="home" className="relative isolate w-full overflow-hidden bg-[#0B132B]">
+      {/* Banner tucks UNDER the opaque navbar (top < navbar height) so there is
+          no white gap/line between them, while its baked-in "Bridging Horizons"
+          title still clears the bar. Sharp, full quality. */}
+      <div className="absolute inset-x-0 bottom-0 top-[40px] z-0 md:top-[48px]">
         <Image
           src="/assets/img/home/bridging-horizons-banner.jpg"
           alt="Bridging Horizons — U.S.–India global innovation and collaboration"
@@ -32,6 +31,9 @@ export function NuiccHero() {
           sizes="100vw"
           className="object-cover object-top"
         />
+        {/* Top scrim masks the image's light top edge so the banner meets the
+            navbar as clean navy (no light/white seam). */}
+        <div className="absolute inset-x-0 top-0 z-[1] h-16 bg-gradient-to-b from-[#0B132B] to-transparent" />
         {/* Left text scrim for legibility (keeps the right side bright) + a fade
             into the white page below. No blur. */}
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#0B132B]/80 via-[#0B132B]/35 to-transparent" />

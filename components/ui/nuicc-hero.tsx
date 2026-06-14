@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
@@ -18,27 +18,42 @@ const CTA_FEEDBACK = "transition-colors duration-200";
 
 export function NuiccHero() {
   const reduce = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Honour reduced-motion: freeze the hero video on its poster frame.
+  useEffect(() => {
+    if (reduce) videoRef.current?.pause();
+  }, [reduce]);
+
   return (
     <section id="home" className="relative isolate w-full overflow-hidden bg-[#0B132B]">
       {/* Banner tucks UNDER the opaque navbar (top < navbar height) so there is
           no white gap/line between them, while its baked-in "Bridging Horizons"
           title still clears the bar. Sharp, full quality. */}
       <div className="absolute inset-x-0 bottom-0 top-[40px] z-0 md:top-[48px]">
-        <Image
-          src="/assets/img/home/bridging-horizons-banner.jpg"
-          alt="Bridging Horizons — U.S.–India global innovation and collaboration"
-          fill
-          priority
-          unoptimized
-          sizes="100vw"
-          className="object-cover object-top"
-        />
+        {/* Animated "Bridging Horizons" banner. Muted/looped autoplay; falls back
+            to the poster frame before load and for reduced-motion users. */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/assets/video/bridging-horizons-poster.jpg"
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover object-top"
+        >
+          <source src="/assets/video/bridging-horizons.mp4" type="video/mp4" />
+        </video>
         {/* Top scrim masks the image's light top edge so the banner meets the
             navbar as clean navy (no light/white seam). */}
         <div className="absolute inset-x-0 top-0 z-[1] h-16 bg-gradient-to-b from-[#0B132B] to-transparent" />
-        {/* Left text scrim for legibility (keeps the right side bright) + a fade
-            into the white page below. No blur. */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#0B132B]/80 via-[#0B132B]/35 to-transparent" />
+        {/* Dim the whole video so its baked-in "Bridging Horizons" title recedes
+            behind the overlay headline (darkest on the left for text legibility),
+            plus a vertical lift and a fade into the white page below. */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#0B132B]/92 via-[#0B132B]/62 to-[#0B132B]/35" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-[#0B132B]/70 via-transparent to-[#0B132B]/30" />
         <div className="absolute inset-x-0 bottom-0 z-[1] h-1/3 bg-gradient-to-t from-[#fbf7ee] to-transparent" />
         {/* Drifting trade-route particles over the banner (subtle, behind text). */}
         <HeroParticles className="pointer-events-none absolute inset-0 z-[2] opacity-60" />

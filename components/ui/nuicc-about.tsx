@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Download, Quote } from "lucide-react";
 import { SectionCard } from "@/components/ui/section-card";
 import { PreviewOverlay } from "@/components/ui/preview-overlay";
+import { CountUp } from "@/components/ui/count-up";
 
 /* The four officers have no real photo/bio on the original site or in this repo,
    so they render as monogram cards (nothing fabricated). TODO(chamber): supply
@@ -18,9 +19,9 @@ const OFFICERS = [
 ];
 
 const STATS = [
-  { value: "$1B+", label: "Bilateral trade facilitated" },
-  { value: "500+", label: "U.S.–India businesses served" },
-  { value: "20+", label: "Years bridging two markets" },
+  { prefix: "$", to: 1, suffix: "B+", label: "Bilateral trade facilitated" },
+  { to: 500, suffix: "+", label: "U.S.–India businesses served" },
+  { to: 20, suffix: "+", label: "Years bridging two markets" },
 ];
 
 const initials = (n: string) => n.split(" ").map((w) => w[0]).slice(0, 2).join("");
@@ -28,6 +29,10 @@ const initials = (n: string) => n.split(" ").map((w) => w[0]).slice(0, 2).join("
 /* ── Shared content blocks (reused by the preview overlay and the /about page) ── */
 
 export function AboutIntro() {
+  const figureRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: figureRef, offset: ["start end", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+
   return (
     <div className="grid items-center gap-10 md:grid-cols-2">
       <div>
@@ -45,22 +50,26 @@ export function AboutIntro() {
         <dl className="mt-8 grid grid-cols-3 gap-4">
           {STATS.map((s) => (
             <div key={s.label} className="rounded-2xl border border-border bg-card p-4 text-center">
-              <dt className="text-2xl font-bold text-[#B8902A] md:text-3xl">{s.value}</dt>
+              <dt className="text-2xl font-bold text-[#B8902A] md:text-3xl">
+                <CountUp prefix={s.prefix} to={s.to} suffix={s.suffix} />
+              </dt>
               <dd className="mt-1 text-[11px] leading-tight text-muted-foreground">{s.label}</dd>
             </div>
           ))}
         </dl>
       </div>
 
-      <figure className="relative">
+      <figure ref={figureRef} className="relative">
         <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-secondary shadow-md">
-          <Image
-            src="/assets/img/home/nuicc_image.jpg"
-            alt="Dr. Purnima Voria with Prime Minister Narendra Modi"
-            fill
-            sizes="(max-width:768px) 100vw, 50vw"
-            className="object-cover"
-          />
+          <motion.div style={{ y: imgY, scale: 1.2 }} className="absolute inset-0">
+            <Image
+              src="/assets/img/home/nuicc_image.jpg"
+              alt="Dr. Purnima Voria with Prime Minister Narendra Modi"
+              fill
+              sizes="(max-width:768px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </motion.div>
         </div>
         <figcaption className="mt-3 text-sm text-muted-foreground">
           NUICC Founder &amp; CEO, Dr. Purnima Voria, with H.E. Prime Minister of India,

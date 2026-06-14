@@ -7,6 +7,7 @@ import "./globals.css";
 import SplashCursor from "@/components/motion/SplashCursor";
 import ProgressRail from "@/components/motion/ProgressRail";
 import MagneticButtons from "@/components/motion/MagneticButtons";
+import { SmoothScroll } from "@/components/ui/smooth-scroll";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -46,6 +47,8 @@ export default function RootLayout({
         <div className="noise" aria-hidden="true" />
         {/* Splash cursor glow */}
         <SplashCursor />
+        {/* Buttery momentum scrolling (Lenis) */}
+        <SmoothScroll />
         {/* Scroll progress */}
         <ProgressRail />
         {/* Magnetic hover on the gold CTAs */}

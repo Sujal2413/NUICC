@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { HeroParticles } from "@/components/ui/hero-particles";
 
 /* Deterministic per-element fade-in-up: tagline → heading → subtext → buttons. */
 const rise = (delay: number) => ({
@@ -16,6 +17,7 @@ const rise = (delay: number) => ({
 const CTA_FEEDBACK = "transition-colors duration-200";
 
 export function NuiccHero() {
+  const reduce = useReducedMotion();
   return (
     <section id="home" className="relative isolate w-full overflow-hidden bg-[#0B132B]">
       {/* Banner tucks UNDER the opaque navbar (top < navbar height) so there is
@@ -38,6 +40,8 @@ export function NuiccHero() {
             into the white page below. No blur. */}
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#0B132B]/80 via-[#0B132B]/35 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 z-[1] h-1/3 bg-gradient-to-t from-[#fbf7ee] to-transparent" />
+        {/* Drifting trade-route particles over the banner (subtle, behind text). */}
+        <HeroParticles className="pointer-events-none absolute inset-0 z-[2] opacity-60" />
       </div>
 
       {/* Content. Anchored from the top with a width-proportional offset so the
@@ -87,6 +91,23 @@ export function NuiccHero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Infinite scroll cue */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.6 }}
+      >
+        <motion.span
+          animate={reduce ? undefined : { y: [0, 9, 0] }}
+          transition={reduce ? undefined : { duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#D4AF37]/50 bg-white/40 text-[#B8902A] backdrop-blur-sm"
+        >
+          <ChevronDown className="h-5 w-5" />
+        </motion.span>
+      </motion.div>
     </section>
   );
 }
